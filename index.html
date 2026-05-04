@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transition Elements — Full Chemistry Notes 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;600;700;900&family=Sora:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════
+   ROOT VARIABLES
+═══════════════════════════════════ */
+:root{
+  --bg:#07090f;
+  --bg2:#0b0f1a;
+  --card:#0f1624;
+  --card2:#111c2e;
+  --border:#1a2d48;
+  --border2:#213552;
+  --cyan:#22d3ee;
+  --teal:#2dd4bf;
+  --gold:#f59e0b;
+  --amber:#fbbf24;
+  --red:#f43f5e;
+  --purple:#a78bfa;
+  --green:#4ade80;
+  --orange:#fb923c;
+  --blue:#60a5fa;
+  --text:#cfe2f5;
+  --muted:#4a6a8a;
+  --white:#f0f9ff;
+  --fs-xs:.75rem;
+  --fs-sm:.875rem;
+  --fs-md:1rem;
+  --fs-lg:1.25rem;
+  --fs-xl:1.5rem;
+  --fs-2xl:2rem;
+  --fs-3xl:2.75rem;
+  --fs-hero:clamp(2.8rem,8vw,5.5rem);
+  --r:8px;
+  --glow-c: 0 0 30px rgba(34,211,238,.15);
+  --glow-g: 0 0 30px rgba(245,158,11,.15);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:var(--fs-md);line-height:1.7;overflow-x:hidden}
+
+/* ═══════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════ */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--cyan)}
+
+/* ═══════════════════════════════════
+   TOPNAV
+═══════════════════════════════════ */
+#topnav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(7,9,15,.88);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:12px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.nav-logo{
+  font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;
+  color:var(--cyan);letter-spacing:2px;text-transform:uppercase;
+  flex-shrink:0;
+}
+.nav-links{
+  display:flex;gap:4px;flex-wrap:wrap;list-style:none;
+}
+.nav-links a{
+  display:block;padding:5px 11px;border-radius:4px;
+  text-decoration:none;font-size:.72rem;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);transition:all .25s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--cyan);background:rgba(34,211,238,.08)}
+@media(max-width:700px){.nav-links{display:none}}
+
+/* ═══════════════════════════════════
+   HERO
+═══════════════════════════════════ */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:120px 24px 60px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 70% at 50% 40%,rgba(34,211,238,.06) 0%,transparent 65%);
+  pointer-events:none;
+}
+#particles{position:absolute;inset:0;pointer-events:none;opacity:.5}
+.hero-eyebrow{
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  letter-spacing:5px;color:var(--cyan);text-transform:uppercase;
+  margin-bottom:18px;opacity:0;animation:fadeUp .9s .2s forwards;
+}
+.hero-title{
+  font-family:'Sora',sans-serif;
+  font-size:var(--fs-hero);font-weight:800;line-height:1;
+  margin-bottom:22px;opacity:0;animation:fadeUp .9s .4s forwards;
+}
+.hero-title .g1{background:linear-gradient(135deg,var(--cyan),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-title .g2{background:linear-gradient(135deg,var(--gold),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{
+  font-size:var(--fs-lg);color:var(--muted);max-width:600px;
+  margin-bottom:36px;opacity:0;animation:fadeUp .9s .6s forwards;
+}
+.hero-pills{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  opacity:0;animation:fadeUp .9s .8s forwards;margin-bottom:50px;
+}
+.pill{
+  background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.2);
+  border-radius:100px;padding:7px 18px;
+  font-family:'Space Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:1px;
+  transition:all .25s;
+}
+.pill:hover{background:rgba(34,211,238,.14);transform:translateY(-2px)}
+
+/* SpongeBob banner */
+.sponge-banner{
+  opacity:0;animation:fadeUp .9s 1s forwards;
+  background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(251,191,36,.06));
+  border:1px solid rgba(245,158,11,.3);border-radius:12px;
+  padding:18px 28px;display:flex;align-items:center;gap:16px;
+  max-width:520px;text-decoration:none;transition:all .3s;
+}
+.sponge-banner:hover{transform:translateY(-3px);box-shadow:0 16px 50px rgba(245,158,11,.15);border-color:var(--gold)}
+.sponge-icon{font-size:2.2rem;flex-shrink:0}
+.sponge-text h3{font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:3px}
+.sponge-text p{font-size:.82rem;color:var(--muted)}
+.sponge-play{
+  margin-left:auto;flex-shrink:0;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--gold);display:flex;align-items:center;justify-content:center;
+  color:#000;font-size:1rem;transition:transform .25s;
+}
+.sponge-banner:hover .sponge-play{transform:scale(1.1)}
+
+/* ═══════════════════════════════════
+   SECTION BASE
+═══════════════════════════════════ */
+section{padding:90px 24px;position:relative}
+.inner{max-width:1200px;margin:0 auto}
+.section-tag{
+  font-family:'Space Mono',monospace;font-size:.65rem;
+  letter-spacing:5px;color:var(--cyan);text-transform:uppercase;
+  margin-bottom:10px;display:flex;align-items:center;gap:12px;
+}
+.section-tag::before{content:'';display:inline-block;width:28px;height:1px;background:var(--cyan)}
+.section-title{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;
+  color:var(--white);margin-bottom:48px;line-height:1.2;
+}
+.section-title span{color:var(--cyan)}
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:0 24px}
+
+/* fade-in on scroll */
+.fade{opacity:0;transform:translateY(28px);transition:.65s cubic-bezier(.22,1,.36,1)}
+.fade.in{opacity:1;transform:none}
+
+/* ═══════════════════════════════════
+   PERIODIC TABLE
+═══════════════════════════════════ */
+#periodic{background:var(--bg)}
+.pt-container{overflow-x:auto;padding-bottom:16px}
+.pt-grid{
+  display:grid;
+  grid-template-columns:repeat(18,minmax(46px,1fr));
+  gap:4px;min-width:860px;
+}
+.pt-cell{
+  aspect-ratio:1;border-radius:5px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  border:1px solid transparent;
+  transition:all .22s;cursor:default;position:relative;
+  font-size:.6rem;
+}
+.pt-cell.empty{background:transparent;border:none}
+.pt-cell .pt-num{font-size:.5rem;color:var(--muted);position:absolute;top:3px;left:4px}
+.pt-cell .pt-sym{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:800;line-height:1}
+.pt-cell .pt-name{font-size:.42rem;color:var(--muted);text-align:center;line-height:1;margin-top:1px}
+/* representative */
+.pt-rep{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.2);color:var(--blue)}
+.pt-rep:hover{background:rgba(96,165,250,.2);transform:scale(1.1);z-index:10}
+/* main transition (d-block) */
+.pt-trans{background:rgba(34,211,238,.12);border-color:rgba(34,211,238,.35);color:var(--cyan)}
+.pt-trans:hover{background:rgba(34,211,238,.28);transform:scale(1.15);z-index:10;box-shadow:0 0 20px rgba(34,211,238,.3)}
+/* noble gas */
+.pt-noble{background:rgba(167,139,250,.08);border-color:rgba(167,139,250,.2);color:var(--purple)}
+/* lanthanide/actinide */
+.pt-inner{background:rgba(251,191,36,.07);border-color:rgba(251,191,36,.2);color:var(--amber)}
+/* highlighted (first series) */
+.pt-first{background:linear-gradient(135deg,rgba(34,211,238,.22),rgba(45,212,191,.18));border-color:var(--cyan);box-shadow:0 0 16px rgba(34,211,238,.2)}
+.pt-first .pt-sym{color:var(--white)}
+.pt-first .pt-name{color:var(--teal)}
+/* Iron special */
+.pt-iron{background:linear-gradient(135deg,rgba(251,191,36,.3),rgba(245,158,11,.2));border-color:var(--gold)!important;box-shadow:0 0 20px rgba(245,158,11,.25)!important}
+.pt-iron .pt-sym{color:var(--gold)!important}
+.pt-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--muted)}
+.legend-box{width:16px;height:16px;border-radius:3px;border:1px solid}
+
+/* ═══════════════════════════════════
+   OVERVIEW CARDS
+═══════════════════════════════════ */
+.ov-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+@media(max-width:700px){.ov-grid{grid-template-columns:1fr}}
+.ov-card{
+  background:var(--card);padding:32px 28px;
+  border:1px solid var(--border);position:relative;overflow:hidden;
+  transition:border-color .3s,transform .3s;
+}
+.ov-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:3px;height:0;
+  background:linear-gradient(to bottom,var(--cyan),var(--teal));
+  transition:height .4s;
+}
+.ov-card:hover{border-color:rgba(34,211,238,.35);transform:translateY(-2px)}
+.ov-card:hover::before{height:100%}
+.ov-card h3{
+  font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;
+  color:var(--cyan);margin-bottom:12px;letter-spacing:.5px;
+}
+.ov-card p{font-size:1rem;line-height:1.8;color:var(--text)}
+.code-box{
+  font-family:'Space Mono',monospace;font-size:.82rem;
+  background:rgba(0,0,0,.4);border:1px solid rgba(34,211,238,.15);
+  border-radius:5px;padding:12px 16px;margin-top:14px;
+  color:var(--teal);line-height:1.9;
+}
+.code-box .hl{color:var(--gold)}
+.code-box .hl2{color:var(--cyan)}
+
+/* ═══════════════════════════════════
+   SERIES TABLE
+═══════════════════════════════════ */
+.tbl-wrap{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+}
+table{width:100%;border-collapse:collapse}
+th{
+  font-family:'Space Mono',monospace;font-size:.62rem;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);padding:16px 18px;text-align:left;
+  border-bottom:1px solid var(--border);
+  background:rgba(34,211,238,.04);
+}
+td{
+  padding:16px 18px;border-bottom:1px solid rgba(26,45,72,.5);
+  font-size:.98rem;
+}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(34,211,238,.03)}
+.td-big{font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;color:var(--cyan)}
+.td-chip{
+  display:inline-block;background:rgba(45,212,191,.1);
+  border:1px solid rgba(45,212,191,.3);border-radius:4px;
+  padding:3px 10px;font-family:'Space Mono',monospace;
+  font-size:.78rem;color:var(--teal);
+}
+
+/* ═══════════════════════════════════
+   ANOMALOUS
+═══════════════════════════════════ */
+.anom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.anom-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px 18px;transition:all .28s;
+}
+.anom-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.anom-sym{font-family:'Sora',sans-serif;font-size:2.8rem;font-weight:800;color:var(--gold);line-height:1}
+.anom-name{font-size:.78rem;color:var(--muted);margin-bottom:12px}
+.anom-wrong{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--red);text-decoration:line-through;opacity:.6}
+.anom-right{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--teal);margin-bottom:6px}
+.anom-badge{
+  display:inline-block;margin-top:6px;
+  background:rgba(45,212,191,.08);border-radius:3px;
+  padding:2px 8px;font-size:.6rem;color:var(--teal);letter-spacing:1px;text-transform:uppercase;
+}
+.stab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
+@media(max-width:600px){.stab-grid{grid-template-columns:1fr}}
+.stab-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;text-align:center;transition:all .28s;
+}
+.stab-card:hover{border-color:rgba(34,211,238,.4);background:rgba(34,211,238,.04);transform:scale(1.03)}
+.orbs{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.orb{
+  width:30px;height:30px;border-radius:4px;
+  border:2px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;
+}
+.orb.f{border-color:var(--cyan);background:rgba(34,211,238,.12);color:var(--cyan)}
+.orb.h{border-color:var(--teal);background:rgba(45,212,191,.1);color:var(--teal)}
+.orb.e{opacity:.35}
+.stab-label{font-family:'Sora',sans-serif;font-size:.88rem;font-weight:700;color:var(--cyan);margin-bottom:4px}
+.stab-desc{font-size:.82rem;color:var(--muted)}
+
+/* ═══════════════════════════════════
+   ELEMENT CARDS
+═══════════════════════════════════ */
+.el-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.el-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;transition:all .3s;
+}
+.el-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.el-head{
+  padding:20px 22px 14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:18px;position:relative;
+}
+.el-head::after{
+  content:'';position:absolute;bottom:0;left:0;height:2px;width:0;
+  transition:width .4s;
+}
+.el-card:hover .el-head::after{width:100%}
+.el-box{
+  width:60px;height:60px;border-radius:6px;flex-shrink:0;
+  border:2px solid;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;position:relative;
+}
+.el-z{font-size:.5rem;position:absolute;top:3px;left:4px;opacity:.7;font-family:'Space Mono',monospace}
+.el-s{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;line-height:1}
+.el-grp{font-size:.45rem;opacity:.7;text-transform:uppercase;letter-spacing:1px}
+.el-name{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:3px}
+.el-cfg{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--muted);margin-bottom:5px}
+.ox-tags{display:flex;gap:3px;flex-wrap:wrap}
+.ox-tag{
+  background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);
+  border-radius:3px;padding:1px 7px;font-family:'Space Mono',monospace;font-size:.62rem;
+}
+.ox-tag.max{border-color:var(--gold);color:var(--gold);background:rgba(245,158,11,.1)}
+.el-body{padding:14px 22px 20px}
+.el-list{list-style:none}
+.el-list li{
+  padding:6px 0;border-bottom:1px solid rgba(26,45,72,.4);
+  font-size:.94rem;display:flex;gap:8px;align-items:flex-start;
+}
+.el-list li:last-child{border-bottom:none}
+.el-list li::before{content:'›';color:var(--cyan);flex-shrink:0;font-size:1.1rem;line-height:1.4}
+.alloy{
+  background:rgba(34,211,238,.04);border:1px solid rgba(34,211,238,.12);
+  border-radius:5px;padding:8px 12px;margin-top:8px;font-size:.85rem;
+}
+.alloy-name{
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  color:var(--gold);margin-bottom:3px;
+}
+.rxn{
+  border-left:2px solid var(--teal);padding:8px 12px;margin-top:8px;
+  font-family:'Space Mono',monospace;font-size:.75rem;color:var(--teal);
+  background:rgba(0,0,0,.25);line-height:2;border-radius:0 4px 4px 0;
+}
+/* Element colour themes */
+.el-sc{--ec:#22d3ee}.el-sc .el-box,.el-sc .el-head::after{border-color:#22d3ee;background:rgba(34,211,238,.08)}.el-sc .el-s,.el-sc .el-name{color:#22d3ee}
+.el-ti{--ec:#2dd4bf}.el-ti .el-box,.el-ti .el-head::after{border-color:#2dd4bf;background:rgba(45,212,191,.08)}.el-ti .el-s,.el-ti .el-name{color:#2dd4bf}
+.el-v{--ec:#a78bfa}.el-v .el-box,.el-v .el-head::after{border-color:#a78bfa;background:rgba(167,139,250,.08)}.el-v .el-s,.el-v .el-name{color:#a78bfa}
+.el-cr{--ec:#f59e0b}.el-cr .el-box,.el-cr .el-head::after{border-color:#f59e0b;background:rgba(245,158,11,.08)}.el-cr .el-s,.el-cr .el-name{color:#f59e0b}
+.el-mn{--ec:#f43f5e}.el-mn .el-box,.el-mn .el-head::after{border-color:#f43f5e;background:rgba(244,63,94,.08)}.el-mn .el-s,.el-mn .el-name{color:#f43f5e}
+.el-fe{--ec:#fbbf24}.el-fe .el-box,.el-fe .el-head::after{border-color:#fbbf24!important;background:rgba(251,191,36,.1)!important}.el-fe .el-s,.el-fe .el-name{color:#fbbf24!important}
+.el-co{--ec:#60a5fa}.el-co .el-box,.el-co .el-head::after{border-color:#60a5fa;background:rgba(96,165,250,.08)}.el-co .el-s,.el-co .el-name{color:#60a5fa}
+.el-ni{--ec:#4ade80}.el-ni .el-box,.el-ni .el-head::after{border-color:#4ade80;background:rgba(74,222,128,.08)}.el-ni .el-s,.el-ni .el-name{color:#4ade80}
+.el-cu{--ec:#fb923c}.el-cu .el-box,.el-cu .el-head::after{border-color:#fb923c;background:rgba(251,146,60,.08)}.el-cu .el-s,.el-cu .el-name{color:#fb923c}
+.el-zn{--ec:#818cf8}.el-zn .el-box,.el-zn .el-head::after{border-color:#818cf8;background:rgba(129,140,248,.08)}.el-zn .el-s,.el-zn .el-name{color:#818cf8}
+
+/* ═══════════════════════════════════
+   IRON DEEP DIVE
+═══════════════════════════════════ */
+#iron{background:linear-gradient(180deg,var(--bg) 0%,rgba(11,15,26,.98) 50%,var(--bg) 100%)}
+.iron-hero{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px;
+}
+@media(max-width:700px){.iron-hero{grid-template-columns:1fr}}
+.fe-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.fe-stat{
+  background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);
+  border-radius:var(--r);padding:16px;text-align:center;
+}
+.fe-stat .val{font-family:'Sora',sans-serif;font-size:1.8rem;font-weight:800;color:var(--gold)}
+.fe-stat .lbl{font-size:.78rem;color:var(--muted)}
+
+/* ORES */
+.ores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:40px}
+.ore{
+  border-radius:var(--r);padding:20px;border:1px solid;
+  transition:transform .28s;
+}
+.ore:hover{transform:translateY(-4px)}
+.ore-h{background:rgba(244,63,94,.06);border-color:rgba(244,63,94,.3)}
+.ore-l{background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.3)}
+.ore-s{background:rgba(96,165,250,.06);border-color:rgba(96,165,250,.3)}
+.ore-m{background:rgba(167,139,250,.06);border-color:rgba(167,139,250,.3)}
+.ore-name{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:4px}
+.ore-h .ore-name{color:#f43f5e}
+.ore-l .ore-name{color:#fbbf24}
+.ore-s .ore-name{color:#60a5fa}
+.ore-m .ore-name{color:#a78bfa}
+.ore-formula{font-family:'Space Mono',monospace;font-size:1.1rem;margin-bottom:8px}
+.ore-detail{font-size:.84rem;line-height:1.7}
+.ore-badge{
+  display:inline-block;margin-top:8px;padding:3px 10px;
+  border-radius:100px;font-size:.68rem;font-family:'Space Mono',monospace;
+}
+.ore-h .ore-badge{background:rgba(244,63,94,.15);color:#f43f5e}
+.ore-l .ore-badge{background:rgba(251,191,36,.15);color:#fbbf24}
+.ore-s .ore-badge{background:rgba(96,165,250,.15);color:#60a5fa}
+.ore-m .ore-badge{background:rgba(167,139,250,.15);color:#a78bfa}
+
+/* BLAST FURNACE SVG */
+.blast-section{margin-bottom:50px}
+.blast-title{font-family:'Sora',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.blast-grid{display:grid;grid-template-columns:340px 1fr;gap:30px;align-items:start}
+@media(max-width:900px){.blast-grid{grid-template-columns:1fr}}
+.blast-svg-wrap{flex-shrink:0}
+.blast-eqs{display:flex;flex-direction:column;gap:10px}
+.eq-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px 16px;
+}
+.eq-label{font-size:.7rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:6px}
+.eq-formula{
+  font-family:'Space Mono',monospace;font-size:.82rem;
+  color:var(--teal);line-height:1.8;
+}
+.eq-formula .arrow{color:var(--gold)}
+.eq-formula .temp{color:var(--amber);font-size:.72rem}
+
+/* IRON CHEMICAL REACTIONS */
+.rxn-section{margin-bottom:40px}
+.rxn-title{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:var(--cyan);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.rxn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.rxn-grid{grid-template-columns:1fr}}
+.rxn-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px;
+  border-left:3px solid var(--cyan);transition:border-color .25s;
+}
+.rxn-box:hover{border-left-color:var(--gold)}
+.rxn-box-title{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:8px}
+.rxn-eq{
+  font-family:'Space Mono',monospace;font-size:.78rem;color:var(--teal);
+  background:rgba(0,0,0,.3);border-radius:4px;padding:8px 10px;
+  line-height:2;margin-bottom:5px;
+}
+.rxn-note{font-size:.78rem;color:var(--muted);margin-top:6px}
+.rxn-note .hl{color:var(--gold)}
+
+/* IRON OXIDE CHAIN */
+.oxide-chain{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:28px;margin-bottom:40px;overflow-x:auto;
+}
+.chain-title{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:20px}
+.chain-svg-wrap{min-width:600px}
+
+/* Iron types (pig, cast, steel) */
+.iron-types-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.itype{
+  border-radius:var(--r);padding:24px;border:1px solid;transition:all .28s;
+}
+.itype:hover{transform:translateY(-4px)}
+.itype-pig{background:rgba(244,63,94,.05);border-color:rgba(244,63,94,.25)}
+.itype-cast{background:rgba(167,139,250,.05);border-color:rgba(167,139,250,.25)}
+.itype-steel{background:rgba(34,211,238,.05);border-color:rgba(34,211,238,.25)}
+.itype-name{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:4px}
+.itype-pig .itype-name{color:#f43f5e}
+.itype-cast .itype-name{color:#a78bfa}
+.itype-steel .itype-name{color:#22d3ee}
+.itype-formula{font-family:'Space Mono',monospace;font-size:.82rem;color:var(--muted);margin-bottom:10px}
+.itype-detail{font-size:.9rem;line-height:1.7}
+
+/* ═══════════════════════════════════
+   PHYSICAL PROPERTIES
+═══════════════════════════════════ */
+.phys-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.phys-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;
+  transition:all .28s;
+}
+.phys-card:hover{border-color:rgba(34,211,238,.3);transform:translateY(-3px)}
+.phys-icon{font-size:2rem;margin-bottom:12px}
+.phys-title{font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:var(--cyan);margin-bottom:10px}
+.phys-body{font-size:.92rem;line-height:1.8}
+.phys-body strong{color:var(--white)}
+.phys-highlight{
+  font-family:'Space Mono',monospace;font-size:.78rem;
+  border-left:2px solid var(--cyan);
+  background:rgba(0,0,0,.3);padding:8px 12px;margin-top:10px;
+  border-radius:0 4px 4px 0;color:var(--teal);line-height:1.9;
+}
+
+/* ═══════════════════════════════════
+   COLORED SOLUTIONS
+═══════════════════════════════════ */
+.colors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.color-card{
+  border-radius:var(--r);padding:18px;border:1px solid;text-align:center;
+  transition:transform .25s;
+}
+.color-card:hover{transform:scale(1.04)}
+.color-formula{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.color-name{font-size:.78rem;color:var(--muted)}
+.color-swatch{width:36px;height:36px;border-radius:50%;margin:10px auto 6px}
+/* Greens */
+.col-green{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.3)}.col-green .color-formula{color:#4ade80}.col-green .color-swatch{background:#4ade80}
+/* Yellow */
+.col-yellow{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.3)}.col-yellow .color-formula{color:#fbbf24}.col-yellow .color-swatch{background:#fbbf24}
+/* Blue */
+.col-blue{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.3)}.col-blue .color-formula{color:#60a5fa}.col-blue .color-swatch{background:#60a5fa}
+/* Violet */
+.col-violet{background:rgba(167,139,250,.08);border-color:rgba(167,139,250,.3)}.col-violet .color-formula{color:#a78bfa}.col-violet .color-swatch{background:#a78bfa}
+/* Orange */
+.col-orange{background:rgba(251,146,60,.08);border-color:rgba(251,146,60,.3)}.col-orange .color-formula{color:#fb923c}.col-orange .color-swatch{background:#fb923c}
+/* Red */
+.col-red{background:rgba(244,63,94,.08);border-color:rgba(244,63,94,.3)}.col-red .color-formula{color:#f43f5e}.col-red .color-swatch{background:#f43f5e}
+/* Pale yellow */
+.col-paley{background:rgba(253,224,71,.08);border-color:rgba(253,224,71,.3)}.col-paley .color-formula{color:#fde047}.col-paley .color-swatch{background:#fde047}
+/* Blue-green */
+.col-blg{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.3)}.col-blg .color-formula{color:#34d399}.col-blg .color-swatch{background:#34d399}
+
+/* ═══════════════════════════════════
+   OXIDATION TABLE
+═══════════════════════════════════ */
+.ox-table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.rules-grid{grid-template-columns:1fr}}
+.rule{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:16px 18px;display:flex;gap:14px;align-items:flex-start;
+  transition:border-color .25s;
+}
+.rule:hover{border-color:rgba(34,211,238,.3)}
+.rule-n{font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:900;color:rgba(34,211,238,.15);line-height:1;flex-shrink:0}
+.rule-body{font-size:.9rem;line-height:1.7}
+.rule-body code{font-family:'Space Mono',monospace;background:rgba(0,0,0,.35);padding:1px 5px;border-radius:3px;color:var(--gold);font-size:.8rem}
+
+/* ═══════════════════════════════════
+   KEY NOTES
+═══════════════════════════════════ */
+#keynotes{background:var(--bg2)}
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.note{
+  border-radius:var(--r);padding:26px;border:1px solid;
+  position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;
+}
+.note:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.note::before{
+  content:'';position:absolute;top:-20px;right:-20px;
+  width:80px;height:80px;border-radius:50%;filter:blur(35px);opacity:.35;
+}
+.note-c{background:rgba(34,211,238,.04);border-color:rgba(34,211,238,.22)}.note-c::before{background:var(--cyan)}.note-c .note-hd{color:var(--cyan)}.note-c .note-hl{border-color:var(--cyan);color:var(--cyan)}
+.note-g{background:rgba(245,158,11,.04);border-color:rgba(245,158,11,.22)}.note-g::before{background:var(--gold)}.note-g .note-hd{color:var(--gold)}.note-g .note-hl{border-color:var(--gold);color:var(--gold)}
+.note-t{background:rgba(45,212,191,.04);border-color:rgba(45,212,191,.22)}.note-t::before{background:var(--teal)}.note-t .note-hd{color:var(--teal)}.note-t .note-hl{border-color:var(--teal);color:var(--teal)}
+.note-r{background:rgba(244,63,94,.04);border-color:rgba(244,63,94,.22)}.note-r::before{background:var(--red)}.note-r .note-hd{color:var(--red)}.note-r .note-hl{border-color:var(--red);color:var(--red)}
+.note-p{background:rgba(167,139,250,.04);border-color:rgba(167,139,250,.22)}.note-p::before{background:var(--purple)}.note-p .note-hd{color:var(--purple)}.note-p .note-hl{border-color:var(--purple);color:var(--purple)}
+.note-o{background:rgba(251,146,60,.04);border-color:rgba(251,146,60,.22)}.note-o::before{background:var(--orange)}.note-o .note-hd{color:var(--orange)}.note-o .note-hl{border-color:var(--orange);color:var(--orange)}
+.note-ico{font-size:1.8rem;margin-bottom:10px}
+.note-hd{font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:10px;letter-spacing:.3px}
+.note-bd{font-size:.9rem;line-height:1.8;color:var(--text)}
+.note-bd strong{color:var(--white)}
+.note-hl{
+  font-family:'Space Mono',monospace;font-size:.75rem;
+  border-left:2px solid;padding:8px 12px;margin-top:12px;
+  background:rgba(0,0,0,.28);border-radius:0 4px 4px 0;line-height:2;
+}
+
+/* ═══════════════════════════════════
+   FOOTER / VIDEO SECTION
+═══════════════════════════════════ */
+#watch{padding:60px 24px;background:var(--bg);text-align:center}
+.watch-card{
+  display:inline-flex;flex-direction:column;align-items:center;gap:20px;
+  background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(251,191,36,.05));
+  border:1px solid rgba(245,158,11,.3);border-radius:16px;
+  padding:36px 40px;max-width:540px;text-decoration:none;
+  transition:all .3s;
+}
+.watch-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(245,158,11,.12);border-color:var(--gold)}
+.watch-emoji{font-size:3rem}
+.watch-title{font-family:'Sora',sans-serif;font-size:1.3rem;font-weight:800;color:var(--gold)}
+.watch-sub{font-size:.9rem;color:var(--muted);max-width:380px}
+.watch-btn{
+  background:var(--gold);color:#000;border-radius:8px;
+  padding:12px 28px;font-weight:700;font-size:.9rem;
+  letter-spacing:.5px;transition:transform .2s;
+}
+.watch-card:hover .watch-btn{transform:scale(1.05)}
+footer{
+  text-align:center;padding:40px 24px;border-top:1px solid var(--border);
+  font-size:.82rem;color:var(--muted);
+}
+footer span{color:var(--cyan)}
+
+/* ═══════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav id="topnav">
+  <div class="nav-logo">⚗ Trans. Elements</div>
+  <ul class="nav-links">
+    <li><a href="#periodic">Periodic Table</a></li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#series">Series</a></li>
+    <li><a href="#config">Config</a></li>
+    <li><a href="#elements">Elements</a></li>
+    <li><a href="#iron">Iron ⚡</a></li>
+    <li><a href="#physical">Properties</a></li>
+    <li><a href="#oxidation">Oxidation</a></li>
+    <li><a href="#keynotes">Key Notes</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════ HERO ══════════════════════════ -->
+<div class="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-eyebrow">// Chemistry · First Transition Series · 2026</div>
+  <h1 class="hero-title">
+    <span class="g1">Transition</span><br>
+    <span class="g2">Elements</span>
+  </h1>
+  <p class="hero-desc">The d-block metals — bridging representative elements and noble gases. Hardness, colour, catalysis, and life itself.</p>
+  <div class="hero-pills">
+    <span class="pill">Sc → Zn</span>
+    <span class="pill">d-Sublevel</span>
+    <span class="pill">Multiple Oxidation States</span>
+    <span class="pill">Paramagnetic</span>
+    <span class="pill">Coloured Compounds</span>
+    <span class="pill">Industrial Catalysts</span>
+  </div>
+  <a class="sponge-banner" href="https://youtu.be/xRfwXBitjc8?si=JlvmOsL4PEQ0065p" target="_blank" rel="noopener">
+    <div class="sponge-icon">🧽</div>
+    <div class="sponge-text">
+      <h3>SpongeBob Chemistry Video</h3>
+      <p>Watch and understand transition elements the fun way!</p>
+    </div>
+    <div class="sponge-play">▶</div>
+  </a>
+</div>
+
+<!-- ══════════════════════════ PERIODIC TABLE ══════════════════════════ -->
+<section id="periodic">
+<div class="inner">
+  <div class="section-tag">00 — The Map</div>
+  <h2 class="section-title">The Periodic <span>Table</span></h2>
+  <div class="pt-container fade">
+    <div class="pt-grid" id="ptGrid"></div>
+    <div class="pt-legend" style="margin-top:16px">
+      <div class="legend-item"><div class="legend-box" style="background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.3)"></div>Representative</div>
+      <div class="legend-item"><div class="legend-box" style="background:rgba(34,211,238,.15);border-color:rgba(34,211,238,.4)"></div>Transition (d-block)</div>
+      <div class="legend-item"><div class="legend-box" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3)"></div>Noble Gases</div>
+      <div class="legend-item"><div class="legend-box" style="background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.3)"></div>Lanthanides/Actinides</div>
+      <div class="legend-item"><div class="legend-box" style="background:linear-gradient(135deg,rgba(34,211,238,.25),rgba(45,212,191,.2));border-color:var(--cyan)"></div>1st Transition Series (Sc–Zn)</div>
+      <div class="legend-item"><div class="legend-box" style="background:linear-gradient(135deg,rgba(251,191,36,.3),rgba(245,158,11,.2));border-color:var(--gold)"></div>Iron (Fe) ⭐</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════ OVERVIEW ══════════════════════════ -->
+<section id="overview">
+<div class="inner">
+  <div class="section-tag">01 — Introduction</div>
+  <h2 class="section-title">What are <span>Transition Elements?</span></h2>
+  <div class="ov-grid">
+    <div class="ov-card fade">
+      <h3>Main Transition Elements</h3>
+      <p>Elements that fill the <strong style="color:var(--cyan)">d-sublevel</strong>. Located in the <strong style="color:var(--cyan)">middle of the periodic table</strong> between representative elements and noble gases. Found in groups 3B–2B (periods 4–7).</p>
+      <div class="code-box">
+        General config: <span class="hl">ns¹⁻²</span> , <span class="hl2">(n-1)d¹⁻¹⁰</span><br>
+        Example (Fe): <span class="hl">[Ar] 4s² 3d⁶</span>
+      </div>
+    </div>
+    <div class="ov-card fade">
+      <h3>Inner Transition Elements</h3>
+      <p>Elements that fill the <strong style="color:var(--gold)">f-sublevel</strong>. Placed below the main table in two separate rows.</p>
+      <div class="code-box">
+        <span class="hl">4f → Lanthanides</span> (Rare Earth, Ce–Lu)<br>
+        <span class="hl2">5f → Actinides</span> (Radioactive, Th–Lr)
+      </div>
+    </div>
+    <div class="ov-card fade">
+      <h3>True Definition of a Transition Element</h3>
+      <p>An element that has <strong style="color:var(--cyan)">at least one unpaired (single) electron in the d-sublevel</strong> — either in its elemental form or in one of its ionic states.</p>
+      <div class="code-box">
+        <span style="color:var(--red)">✗ Zn</span> — d¹⁰ always paired → NOT a true transition element<br>
+        <span class="hl2">✓ Cu</span> — d⁹ in Cu⁺² → IS a transition element<br>
+        <span class="hl2">✓ Sc</span> — d¹ in elemental form → IS a transition element
+      </div>
+    </div>
+    <div class="ov-card fade">
+      <h3>d-Sublevel Structure</h3>
+      <p>The d-sublevel has <strong style="color:var(--teal)">5 orbitals</strong>, each holding 2 electrons — max <strong style="color:var(--teal)">10 electrons total</strong>. Their spin motion creates magnetic fields.</p>
+      <div class="code-box" style="font-size:1rem;letter-spacing:5px;text-align:center">
+        <span class="hl2">↑↓</span>  <span class="hl2">↑↓</span>  <span class="hl2">↑↓</span>  <span class="hl2">↑↓</span>  <span class="hl2">↑↓</span>
+        <div style="font-size:.65rem;letter-spacing:2px;margin-top:6px;color:var(--muted)">COMPLETELY FILLED (d¹⁰)</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════ SERIES ══════════════════════════ -->
+<section id="series">
+<div class="inner">
+  <div class="section-tag">02 — Classification</div>
+  <h2 class="section-title">Transition <span>Series</span></h2>
+  <div class="tbl-wrap fade" style="margin-bottom:30px">
+    <table>
+      <thead><tr><th>Series</th><th>Sublevel</th><th>Z Range</th><th>Start</th><th>End</th><th>Period</th><th>General Formula</th></tr></thead>
+      <tbody>
+        <tr><td><span class="td-big">1st</span></td><td><span class="td-chip">3d</span></td><td style="color:var(--text)">21–30</td><td style="color:var(--cyan);font-family:'Space Mono',monospace">Sc (21)</td><td style="color:var(--muted)">Zn (30)</td><td style="font-family:'Space Mono',monospace;color:var(--gold)">4</td><td style="font-family:'Space Mono',monospace;font-size:.8rem;color:var(--muted)">[Ar] 4s¹⁻² 3d¹⁻¹⁰</td></tr>
+        <tr><td><span class="td-big">2nd</span></td><td><span class="td-chip">4d</span></td><td style="color:var(--text)">39–48</td><td style="color:var(--cyan);font-family:'Space Mono',monospace">Y (39)</td><td style="color:var(--muted)">Cd (48)</td><td style="font-family:'Space Mono',monospace;color:var(--gold)">5</td><td style="font-family:'Space Mono',monospace;font-size:.8rem;color:var(--muted)">[Kr] 5s¹⁻² 4d¹⁻¹⁰</td></tr>
+        <tr><td><span class="td-big">3rd</span></td><td><span class="td-chip">5d</span></td><td style="color:var(--text)">57–80</td><td style="color:var(--cyan);font-family:'Space Mono',monospace">La (57)</td><td style="color:var(--muted)">Hg (80)</td><td style="font-family:'Space Mono',monospace;color:var(--gold)">6</td><td style="font-family:'Space Mono',monospace;font-size:.8rem;color:var(--muted)">[Xe] 6s¹⁻² 5d¹⁻¹⁰</td></tr>
+        <tr><td><span class="td-big">4th</span></td><td><span class="td-chip">6d</span></td><td style="color:var(--text)">89–112</td><td style="color:var(--cyan);font-family:'Space Mono',monospace">Ac (89)</td><td style="color:var(--muted)">Z=112</td><td style="font-family:'Space Mono',monospace;color:var(--gold)">7</td><td style="font-family:'Space Mono',monospace;font-size:.8rem;color:var(--muted)">[Rn] 7s¹⁻² 6d¹⁻¹⁰</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ov-grid fade">
+    <div class="ov-card">
+      <h3>Period Number Calculation</h3>
+      <p>= Principal quantum number of <strong>last s</strong> sublevel<br>OR = n of last d + 1</p>
+      <div class="code-box">[Ar] 4s² 3d⁵ → Period <span class="hl">4</span><br>[Xe] 6s² 4f¹⁴ 5d → Period <span class="hl">6</span> (5+1)</div>
+    </div>
+    <div class="ov-card">
+      <h3>General Group Number</h3>
+      <p>= e⁻ in last s + e⁻ in last d</p>
+      <div class="code-box">[Ar] 4s² 3d⁵ → Group <span class="hl">2+5 = 7</span> (7B)<br>[Kr] 5s² 4d³ → Group <span class="hl">2+3 = 5</span> (5B)</div>
+    </div>
+    <div class="ov-card">
+      <h3>Special Group (d¹–d⁵)</h3>
+      <p>For d¹, d², d³, d⁵: Group = e⁻ in s + e⁻ in d + Symbol B</p>
+      <div class="code-box">d⁶, d⁷, d⁸ → Group <span class="hl">8</span> (VIII)<br>d¹⁰ → Group <span class="hl">2B</span><br>d¹ with 1s → Group <span class="hl">1B</span></div>
+    </div>
+    <div class="ov-card">
+      <h3>No. of Series Rule</h3>
+      <p>Series number = n of d sublevel, NOT n of s.<br>Formula: <code style="font-family:'Space Mono',monospace;color:var(--cyan)">n (period) = n (d) + 1</code></p>
+      <div class="code-box">3d → 1st series → Period <span class="hl">4</span><br>4d → 2nd series → Period <span class="hl">5</span><br>5d → 3rd series → Period <span class="hl">6</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════ ANOMALOUS CONFIG ══════════════════════════ -->
+<section id="config">
+<div class="inner">
+  <div class="section-tag">03 — Electronic Configuration</div>
+  <h2 class="section-title">Anomalous <span>Configurations</span></h2>
+  <div class="stab-grid fade">
+    <div class="stab-card">
+      <div class="orbs"><div class="orb e"></div><div class="orb e"></div><div class="orb e"></div><div class="orb e"></div><div class="orb e"></div></div>
+      <div class="stab-label">Empty (d⁰)</div>
+      <div class="stab-desc">Completely empty — inherently stable</div>
+    </div>
+    <div class="stab-card">
+      <div class="orbs"><div class="orb h">↑</div><div class="orb h">↑</div><div class="orb h">↑</div><div class="orb h">↑</div><div class="orb h">↑</div></div>
+      <div class="stab-label">Half-Filled (d⁵)</div>
+      <div class="stab-desc">Max exchange energy & perfect symmetry</div>
+    </div>
+    <div class="stab-card">
+      <div class="orbs"><div class="orb f">↑↓</div><div class="orb f">↑↓</div><div class="orb f">↑↓</div><div class="orb f">↑↓</div><div class="orb f">↑↓</div></div>
+      <div class="stab-label">Completely Filled (d¹⁰)</div>
+      <div class="stab-desc">All paired — maximum stability</div>
+    </div>
+  </div>
+  <p class="fade" style="color:var(--muted);margin-bottom:28px;font-size:1rem;max-width:680px">An electron "jumps" from 4s → 3d to achieve a more stable half-filled (d⁵) or fully filled (d¹⁰) sublevel. Note: d⁴ and d⁹ do NOT exist in elemental form — only in ionic form.</p>
+  <div class="anom-grid">
+    <div class="anom-card fade"><div class="anom-sym">Cr</div><div class="anom-name">Chromium — 24</div><div class="anom-wrong">[Ar] 4s² 3d⁴</div><div class="anom-right">[Ar] 4s¹ 3d⁵ ✓</div><span class="anom-badge">Half-filled d⁵</span></div>
+    <div class="anom-card fade"><div class="anom-sym">Mo</div><div class="anom-name">Molybdenum — 42</div><div class="anom-wrong">[Kr] 5s² 4d⁴</div><div class="anom-right">[Kr] 5s¹ 4d⁵ ✓</div><span class="anom-badge">Half-filled d⁵</span></div>
+    <div class="anom-card fade"><div class="anom-sym">Cu</div><div class="anom-name">Copper — 29</div><div class="anom-wrong">[Ar] 4s² 3d⁹</div><div class="anom-right">[Ar] 4s¹ 3d¹⁰ ✓</div><span class="anom-badge">Fully filled d¹⁰</span></div>
+    <div class="anom-card fade"><div class="anom-sym">Ag</div><div class="anom-name">Silver — 47</div><div class="anom-wrong">[Kr] 5s² 4d⁹</div><div class="anom-right">[Kr] 5s¹ 4d¹⁰ ✓</div><span class="anom-badge">Fully filled d¹⁰</span></div>
+    <div class="anom-card fade"><div class="anom-sym">Au</div><div class="anom-name">Gold — 79</div><div class="anom-wrong">[Xe] 6s² 4f¹⁴ 5d⁹</div><div class="anom-right">[Xe] 6s¹ 4f¹⁴ 5d¹⁰ ✓</div><span class="anom-badge">Fully filled d¹⁰</span></div>
+    <div class="anom-card fade" style="border-color:rgba(34,211,238,.25)">
+      <div style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:var(--cyan);margin-bottom:8px">⚡ Removal Order</div>
+      <div style="font-size:.9rem;line-height:1.7">When losing electrons, always remove from <strong style="color:var(--cyan)">outermost sublevel first</strong> (s before d).<br><br>Mn: [Ar] 4s² 3d⁵<br>Mn²⁺: [Ar] 3d⁵ (s lost)<br>Mn³⁺: [Ar] 3d⁴ (then d)</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════ ELEMENTS ══════════════════════════ -->
+<section id="elements">
+<div class="inner">
+  <div class="section-tag">04 — Economic Uses</div>
+  <h2 class="section-title">Elements of the <span>First Series</span></h2>
+  <div class="el-grid">
+
+    <!-- SCANDIUM -->
+    <div class="el-card el-sc fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">21</span><span class="el-s">Sc</span><span class="el-grp">3B</span></div>
+        <div><div class="el-name">Scandium</div><div class="el-cfg">[Ar] 4s² 3d¹</div><div class="ox-tags"><span class="ox-tag max">+3</span></div></div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list">
+          <li>Rare but found in large areas of Earth's crust — characterized by hardness</li>
+        </ul>
+        <div class="alloy"><div class="alloy-name">Sc–Al Alloy</div>Hard + Light → MIG fighter jets, weapons, water/land tanks</div>
+        <div class="alloy"><div class="alloy-name">Sc–Hg Vapour Lamp</div>Sunlight-like efficiency → photographic TV, border & submarine lamps, stadium & factory night lighting</div>
+      </div>
+    </div>
+
+    <!-- TITANIUM -->
+    <div class="el-card el-ti fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">22</span><span class="el-s">Ti</span><span class="el-grp">4B</span></div>
+        <div><div class="el-name">Titanium</div><div class="el-cfg">[Ar] 4s² 3d²</div><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag">+3</span><span class="ox-tag max">+4</span></div></div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list">
+          <li>Hard as steel, lighter than steel, maintains durability at high temperatures</li>
+          <li>Not toxic — body doesn't reject it</li>
+        </ul>
+        <div class="alloy"><div class="alloy-name">Pure Ti</div>Teeth implantation, artificial joints, plates & nails for broken bones</div>
+        <div class="alloy"><div class="alloy-name">Ti–Al Alloy</div>Maintains Al durability at high temp → space shuttles, rockets</div>
+        <div class="alloy"><div class="alloy-name">TiO₂ — Titanium Dioxide</div>Sunblock creams — in nanoscale, highly protects from UV rays</div>
+        <div class="alloy"><div class="alloy-name">Ti–Ni (Nitinol) — Shape Memory</div>Ability to return to original shape → teeth corrections, braces</div>
+      </div>
+    </div>
+
+    <!-- VANADIUM -->
+    <div class="el-card el-v fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">23</span><span class="el-s">V</span><span class="el-grp">5B</span></div>
+        <div><div class="el-name">Vanadium</div><div class="el-cfg">[Ar] 4s² 3d³</div><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag">+3</span><span class="ox-tag">+4</span><span class="ox-tag max">+5</span></div></div>
+      </div>
+      <div class="el-body">
+        <div class="alloy"><div class="alloy-name">V–Steel (V–Fe–C)</div>Extreme hardness + high corrosion resistance → car springs, gears of high-speed plane motors</div>
+        <div class="alloy"><div class="alloy-name">V₂O₅ — Contact Method (H₂SO₄)</div>
+          <div class="rxn">SO₂ + ½O₂ <span style="color:var(--gold)">—[V₂O₅, 450°C]→</span> SO₃<br>SO₃ + H₂O → H₂SO₄</div>
+        </div>
+        <div class="alloy"><div class="alloy-name">V₂O₅ — Benzoic Acid</div>
+          <div class="rxn">2C₆H₅CH₃ + 3O₂ <span style="color:var(--gold)">—[V₂O₅, 400°C]→</span> 2C₆H₅COOH + 2H₂O</div>
+        </div>
+        <div class="alloy"><div class="alloy-name">V₂O₅ — Other Uses</div>Dyes for ceramic & glass manufacturing; catalyst for magnet manufacturing</div>
+      </div>
+    </div>
+
+    <!-- CHROMIUM -->
+    <div class="el-card el-cr fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">24</span><span class="el-s">Cr</span><span class="el-grp">6B</span></div>
+        <div><div class="el-name">Chromium</div><div class="el-cfg">[Ar] 4s¹ 3d⁵ ⚡</div><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag">+3</span><span class="ox-tag">+4</span><span class="ox-tag">+5</span><span class="ox-tag max">+6</span></div></div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list"><li>Very active metal — except resistance to O₂ (passivity phenomenon)</li></ul>
+        <div class="alloy"><div class="alloy-name">Passivity (Al &amp; Cr)</div>Formation of large-sized, non-porous metal oxide layer that protects inner layers from continuous reaction. Ratio before:after = 2:1</div>
+        <div class="alloy"><div class="alloy-name">Fe–Cr → Stainless Steel</div>Iron protected from air by Cr passivity — used in surgical tools, cutlery</div>
+        <div class="alloy"><div class="alloy-name">Pure Cr</div>Metal plating, leather tanning (دباغة الجلود)</div>
+        <div class="alloy"><div class="alloy-name">Cr₂O₃</div>Chromium III oxide — used as green dye/pigment</div>
+        <div class="alloy"><div class="alloy-name">K₂Cr₂O₇ — Potassium Dichromate</div>Strong oxidizing agent (orange colour)</div>
+      </div>
+    </div>
+
+    <!-- MANGANESE -->
+    <div class="el-card el-mn fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">25</span><span class="el-s">Mn</span><span class="el-grp">7B</span></div>
+        <div><div class="el-name">Manganese</div><div class="el-cfg">[Ar] 4s² 3d⁵</div><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag">+3</span><span class="ox-tag">+4</span><span class="ox-tag">+5</span><span class="ox-tag">+6</span><span class="ox-tag max">+7</span></div></div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list"><li>Not used in pure state — too brittle and fragile (extreme fragility)</li></ul>
+        <div class="alloy"><div class="alloy-name">Mn–Al Alloy</div>Corrosion resistant → used in cans</div>
+        <div class="alloy"><div class="alloy-name">Mn–Fe (Ferromanganese)</div>Harder than steel → used in railway tracks</div>
+        <div class="alloy"><div class="alloy-name">MnO₂ — Manganese Dioxide</div>1- Oxidizing agent in dry cells<br>2- Catalyst: 2H₂O₂ →[MnO₂]→ 2H₂O + O₂</div>
+        <div class="alloy"><div class="alloy-name">MnSO₄ — Manganese II Sulphate</div>Anti-fungal (fungicide) — but not safe</div>
+        <div class="alloy"><div class="alloy-name">KMnO₄ — Potassium Permanganate (violet)</div>1- Antiseptic / disinfectant, cleaning clinics & fish tanks, dermatology<br>2- Very strong oxidizing agent</div>
+      </div>
+    </div>
+
+    <!-- IRON — highlighted card -->
+    <div class="el-card el-fe fade" style="border-color:rgba(251,191,36,.35);box-shadow:0 0 30px rgba(251,191,36,.1)">
+      <div class="el-head" style="background:rgba(251,191,36,.04)">
+        <div class="el-box" style="width:72px;height:72px"><span class="el-z">26</span><span class="el-s" style="font-size:1.8rem">Fe</span><span class="el-grp">VIII</span></div>
+        <div>
+          <div class="el-name" style="font-size:1.2rem">Iron ⭐</div>
+          <div class="el-cfg">[Ar] 4s² 3d⁶</div>
+          <div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag max">+3</span><span class="ox-tag" style="opacity:.5">+6 rare</span></div>
+          <div style="margin-top:6px;font-size:.72rem;color:var(--gold)">4th element in Earth's crust · 2nd metal (5.1%)</div>
+        </div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list">
+          <li>Not used in pure form — too soft. Used in pipes, reinforced concrete, surgical tools, pylons</li>
+        </ul>
+        <div class="alloy"><div class="alloy-name">Haber-Bosch — Ammonia (Fe/Mo catalyst)</div>
+          <div class="rxn">N₂ + 3H₂ <span style="color:var(--gold)">—[Fe/Mo, 200atm, 500°C]→</span> 2NH₃</div>
+        </div>
+        <div class="alloy"><div class="alloy-name">Fisher-Tropish — Liquid Fuel (Fe catalyst)</div>
+          <div class="rxn">nCO + (2n+1)H₂ <span style="color:var(--gold)">—[Fe, Δ]→</span> CₙH₂ₙ₊₂ + nH₂O</div>
+        </div>
+        <div class="alloy"><div class="alloy-name">FeCl₃ — Halogenation of Benzene</div>
+          <div class="rxn">C₆H₆ + Cl₂ <span style="color:var(--gold)">—[FeCl₃]→</span> C₆H₅Cl + HCl</div>
+        </div>
+        <a href="#iron" style="display:inline-block;margin-top:12px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);border-radius:6px;padding:8px 16px;color:var(--gold);text-decoration:none;font-size:.82rem;font-weight:700;transition:all .25s">⬇ Full Iron Deep-Dive Section ⬇</a>
+      </div>
+    </div>
+
+    <!-- COBALT -->
+    <div class="el-card el-co fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">27</span><span class="el-s">Co</span><span class="el-grp">VIII</span></div>
+        <div><div class="el-name">Cobalt</div><div class="el-cfg">[Ar] 4s² 3d⁷</div><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag max">+3</span><span class="ox-tag">+4</span></div></div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list"><li>Magnetic properties like iron [Magnetized elements: Fe, Co]</li></ul>
+        <div class="alloy"><div class="alloy-name">Pure Co</div>Manufacturing of magnets (like iron); batteries of modern cars [LiCoO₂]</div>
+        <div class="alloy"><div class="alloy-name">⁶⁰Co Isotope (most common, 12 isotopes)</div>Radiates X-rays with high penetrating power →<br>1- Preservation of foods<br>2- Detection of cracks & weldings in products<br>3- Detection &amp; treatment of tumors (cancer)</div>
+      </div>
+    </div>
+
+    <!-- NICKEL -->
+    <div class="el-card el-ni fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">28</span><span class="el-s">Ni</span><span class="el-grp">VIII</span></div>
+        <div><div class="el-name">Nickel</div><div class="el-cfg">[Ar] 4s² 3d⁸</div><div class="ox-tags"><span class="ox-tag max">+2</span><span class="ox-tag" style="opacity:.5">+3 rare</span></div></div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list">
+          <li>Pure Ni: Metal plating — protects from corrosion, gives shiny appearance</li>
+          <li>Catalyst in hydrogenation of vegetable oils (unsaturated → saturated)</li>
+        </ul>
+        <div class="rxn">Veg. oil + H₂ <span style="color:var(--gold)">—[Ni/Δ]→</span> Artificial solid fats (زيت → سمن)</div>
+        <div class="alloy" style="margin-top:10px"><div class="alloy-name">Ni–Steel (Ni–Fe–C)</div>Resistant to corrosion &amp; acids → containers for acids</div>
+        <div class="alloy"><div class="alloy-name">Ni–Cd</div>Rechargeable batteries</div>
+        <div class="alloy"><div class="alloy-name">Ni–Cr Alloy</div>Resistant to high-temp corrosion → heating coils, electrical furnaces</div>
+        <div class="alloy"><div class="alloy-name">Ti–Ni (Nitinol)</div>Shape memory → teeth corrections</div>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:10px">★ Ni is the only element in 1st series that has another element with MORE atomic mass but LOWER atomic number (anomaly)</p>
+      </div>
+    </div>
+
+    <!-- COPPER -->
+    <div class="el-card el-cu fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">29</span><span class="el-s">Cu</span><span class="el-grp">IB</span></div>
+        <div><div class="el-name">Copper</div><div class="el-cfg">[Ar] 4s¹ 3d¹⁰ ⚡</div><div class="ox-tags"><span class="ox-tag max">+1</span><span class="ox-tag">+2</span></div></div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list">
+          <li><strong>First discovered metal in history</strong></li>
+          <li>Electrical wires &amp; circuits, coins, statues, accessories</li>
+          <li>Coinage metals: Cu, Ag, Au (transition) + Al (representative)</li>
+        </ul>
+        <div class="alloy"><div class="alloy-name">Cu–Zn → Brass</div>Covers handles of doors — protects from corrosion</div>
+        <div class="alloy"><div class="alloy-name">Cu–Sn → Bronze</div>Used in statues and medals</div>
+        <div class="alloy"><div class="alloy-name">CuSO₄ — Copper II Sulphate (blue)</div>Fungicide (safe) for water purification; insecticide</div>
+        <div class="alloy"><div class="alloy-name">Fehling Solution</div>Detects glucose: colour changes <span style="color:#60a5fa">blue</span> → <span style="color:#fb923c">orange</span> → detect diabetic patients</div>
+        <div class="alloy"><div class="alloy-name">CuCrO₄ — Catalyst</div>
+          <div class="rxn">CH₃COOH + 2H₂ <span style="color:var(--gold)">—[CuCrO₄, 200°C]→</span> C₂H₅OH + H₂O</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZINC -->
+    <div class="el-card el-zn fade">
+      <div class="el-head">
+        <div class="el-box"><span class="el-z">30</span><span class="el-s">Zn</span><span class="el-grp">IIB</span></div>
+        <div><div class="el-name">Zinc</div><div class="el-cfg">[Ar] 4s² 3d¹⁰</div><div class="ox-tags"><span class="ox-tag max">+2</span></div></div>
+      </div>
+      <div class="el-body">
+        <ul class="el-list">
+          <li>Pure Zn: Galvanization (metal plating to protect from corrosion)</li>
+          <li>Reducing agent — reduces phenol to benzene</li>
+        </ul>
+        <div class="alloy"><div class="alloy-name">ZnO — Zinc Oxide</div>Cosmetics, paints, rubber manufacturing</div>
+        <div class="alloy"><div class="alloy-name">ZnS — Zinc Sulphide</div>Illuminating paints; X-ray screens</div>
+        <div class="alloy"><div class="alloy-name">ZnCl₂ — Zinc Chloride (catalyst)</div>
+          <div class="rxn">C₂H₅OH + HCl <span style="color:var(--gold)">—[ZnCl₂]→</span> C₂H₅Cl + H₂O</div>
+        </div>
+        <div style="margin-top:10px;background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.2);border-radius:5px;padding:10px;font-size:.82rem;color:#818cf8">
+          ★ Zn is NOT a true transition element — its d¹⁰ is always fully paired in all oxidation states (elemental and Zn²⁺). Only +2 oxidation state.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════ IRON DEEP DIVE ══════════════════════════ -->
+<section id="iron">
+<div class="inner">
+  <div class="section-tag">05 — Iron Deep Dive ⭐</div>
+  <h2 class="section-title">Iron (Fe) — <span>Complete Study</span></h2>
+
+  <!-- Hero stats -->
+  <div class="iron-hero fade">
+    <div>
+      <div style="background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:var(--r);padding:24px">
+        <div style="font-family:'Sora',sans-serif;font-size:3.5rem;font-weight:900;color:var(--gold);line-height:1">Fe</div>
+        <div style="font-family:'Space Mono',monospace;font-size:.8rem;color:var(--muted);margin-bottom:14px">IRON · 26 · [Ar] 4s² 3d⁶</div>
+        <div style="font-size:.9rem;line-height:1.8">
+          <div>⚡ Oxidation states: <strong style="color:var(--gold)">+2, +3</strong> (main), +6 (rare)</div>
+          <div>⚡ Melting point: <strong style="color:var(--gold)">1538°C</strong></div>
+          <div>⚡ Group: <strong style="color:var(--gold)">VIII · Period 4</strong></div>
+          <div>⚡ Group 8 compounds: all <strong style="color:var(--gold)">paramagnetic &amp; coloured</strong></div>
+        </div>
+        <div class="fe-stat-grid">
+          <div class="fe-stat"><div class="val">4th</div><div class="lbl">Element in Earth's Crust</div></div>
+          <div class="fe-stat"><div class="val">2nd</div><div class="lbl">Most Abundant Metal</div></div>
+          <div class="fe-stat"><div class="val">5.1%</div><div class="lbl">of Earth's Crust</div></div>
+          <div class="fe-stat"><div class="val">90%</div><div class="lbl">Purity in Meteorites</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px;height:100%">
+        <div style="font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:var(--cyan);margin-bottom:14px">Physical Properties</div>
+        <ul class="el-list">
+          <li>Metallic lustre (shiny)</li>
+          <li>Good conductor of electricity</li>
+          <li>Good conductor of heat</li>
+          <li>High density — higher than all other elements in periodic table</li>
+          <li>High melting point (1538°C) &amp; high boiling point</li>
+          <li>Soft — so NOT used in pure state</li>
+          <li>Paramagnetic (single electrons in d⁶)</li>
+        </ul>
+        <div style="font-family:'Sora',sans-serif;font-size:1rem;font-weight:700;color:var(--cyan);margin-top:16px;margin-bottom:10px">Iron Compounds in Nature</div>
+        <div style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--teal);background:rgba(0,0,0,.3);padding:12px;border-radius:5px;line-height:2">
+          Fe₂O₃ — Hematite (iron III oxide)<br>
+          Fe₃O₄ — Magnetite (magnetic iron oxide)<br>
+          FeCO₃ — Siderite (iron II carbonate)<br>
+          2Fe₂O₃·3H₂O — Limonite
+        </div>
+        <p style="font-size:.82rem;color:var(--muted);margin-top:10px">By decreasing distance to Earth's core, purity of iron increases. Core = 100% pure molten iron &amp; nickel.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORES -->
+  <h3 style="font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:20px">Types of Iron Ores</h3>
+  <div class="ores-grid fade">
+    <div class="ore ore-h">
+      <div class="ore-name">Hematite</div>
+      <div class="ore-formula" style="color:#f43f5e">Fe₂O₃</div>
+      <div class="ore-detail">Iron III oxide · <strong style="color:#f43f5e">Red colour</strong><br>Used in red dyes &amp; pigments.<br>Mars is red because its atmosphere is rich with hematite.<br>ONLY ore used for iron extraction (69.6% iron, easy to reduce).</div>
+      <div class="ore-badge">Fe% = 69.6%</div>
+    </div>
+    <div class="ore ore-l">
+      <div class="ore-name">Limonite</div>
+      <div class="ore-formula" style="color:#fbbf24">2Fe₂O₃·3H₂O</div>
+      <div class="ore-detail">Hydrated iron III oxide · <strong style="color:#fbbf24">Yellow colour</strong><br>Cannot be used directly — must be roasted first to convert to hematite.</div>
+      <div class="ore-badge">Fe% = 45%</div>
+    </div>
+    <div class="ore ore-s">
+      <div class="ore-name">Siderite</div>
+      <div class="ore-formula" style="color:#60a5fa">FeCO₃</div>
+      <div class="ore-detail">Iron II carbonate · <strong style="color:#60a5fa">Yellowish-grey</strong><br>Must be roasted to hematite before use.</div>
+      <div class="ore-badge">Fe% = 48%</div>
+    </div>
+    <div class="ore ore-m">
+      <div class="ore-name">Magnetite</div>
+      <div class="ore-formula" style="color:#a78bfa">Fe₃O₄</div>
+      <div class="ore-detail">Magnetic iron oxide · <strong style="color:#a78bfa">Dark black</strong><br>Highest Fe% but NOT used for extraction — magnetic nature makes it very difficult to deal with chemically.<br>Oxidation of Fe in Fe₃O₄ = +2 and +3</div>
+      <div class="ore-badge">Fe% = up to 70%</div>
+    </div>
+  </div>
+
+  <!-- BLAST FURNACE -->
+  <div class="blast-section fade">
+    <div class="blast-title">🔥 Extraction of Iron — Blast Furnace (الفرن العالي)</div>
+    <div class="blast-grid">
+      <div class="blast-svg-wrap">
+        <svg viewBox="0 0 320 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px">
+          <defs>
+            <linearGradient id="furnGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1a2d48"/>
+              <stop offset="100%" stop-color="#0b1420"/>
+            </linearGradient>
+            <linearGradient id="fireGrad" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Furnace body -->
+          <rect x="80" y="40" width="160" height="340" rx="12" fill="url(#furnGrad)" stroke="#f59e0b" stroke-width="2"/>
+          <!-- Top opening label -->
+          <rect x="120" y="30" width="80" height="20" rx="4" fill="#0f1624" stroke="#22d3ee" stroke-width="1"/>
+          <text x="160" y="44" text-anchor="middle" fill="#22d3ee" font-size="9" font-family="monospace">HEMATITE + COKE</text>
+          <!-- Zones -->
+          <rect x="81" y="41" width="158" height="60" rx="8" fill="rgba(34,211,238,.08)"/>
+          <text x="160" y="62" text-anchor="middle" fill="#22d3ee" font-size="9" font-family="monospace">300°C</text>
+          <text x="160" y="76" text-anchor="middle" fill="#2dd4bf" font-size="8" font-family="monospace">3Fe₂O₃+CO→2Fe₃O₄+CO₂</text>
+          <line x1="80" y1="101" x2="240" y2="101" stroke="#1a2d48" stroke-width="1"/>
+
+          <rect x="81" y="102" width="158" height="55" fill="rgba(167,139,250,.06)"/>
+          <text x="160" y="122" text-anchor="middle" fill="#a78bfa" font-size="9" font-family="monospace">500°C</text>
+          <text x="160" y="136" text-anchor="middle" fill="#a78bfa" font-size="8" font-family="monospace">Fe₃O₄+CO→3FeO+CO₂</text>
+          <line x1="80" y1="157" x2="240" y2="157" stroke="#1a2d48" stroke-width="1"/>
+
+          <rect x="81" y="158" width="158" height="55" fill="rgba(251,191,36,.07)"/>
+          <text x="160" y="178" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="monospace">700°C</text>
+          <text x="160" y="192" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="monospace">FeO + CO → Fe + CO₂</text>
+          <line x1="80" y1="213" x2="240" y2="213" stroke="#1a2d48" stroke-width="1"/>
+
+          <rect x="81" y="214" width="158" height="60" fill="rgba(245,158,11,.08)"/>
+          <text x="160" y="236" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="monospace">900°C</text>
+          <text x="160" y="252" text-anchor="middle" fill="#f59e0b" font-size="8" font-family="monospace">CaCO₃→CaO+CO₂</text>
+          <line x1="80" y1="274" x2="240" y2="274" stroke="#1a2d48" stroke-width="1"/>
+
+          <rect x="81" y="275" width="158" height="55" fill="rgba(244,63,94,.08)"/>
+          <text x="160" y="295" text-anchor="middle" fill="#f43f5e" font-size="9" font-family="monospace">1200–1500°C</text>
+          <text x="160" y="309" text-anchor="middle" fill="#f43f5e" font-size="8" font-family="monospace">C+O₂→CO₂, CO₂+C→2CO</text>
+
+          <!-- Fire animation at bottom -->
+          <ellipse cx="160" cy="360" rx="60" ry="20" fill="url(#fireGrad)" opacity=".7">
+            <animate attributeName="rx" values="60;70;60" dur="2s" repeatCount="indefinite"/>
+          </ellipse>
+
+          <!-- Hot air inlets -->
+          <rect x="30" y="280" width="52" height="12" rx="4" fill="rgba(244,63,94,.15)" stroke="#f43f5e" stroke-width="1"/>
+          <text x="56" y="290" text-anchor="middle" fill="#f43f5e" font-size="8" font-family="monospace">HOT AIR</text>
+          <line x1="80" y1="286" x2="82" y2="286" stroke="#f43f5e" stroke-width="2" marker-end="url(#arr)"/>
+
+          <rect x="238" y="280" width="52" height="12" rx="4" fill="rgba(244,63,94,.15)" stroke="#f43f5e" stroke-width="1"/>
+          <text x="264" y="290" text-anchor="middle" fill="#f43f5e" font-size="8" font-family="monospace">HOT AIR</text>
+
+          <!-- Outputs -->
+          <rect x="30" y="355" width="52" height="14" rx="4" fill="rgba(167,139,250,.15)" stroke="#a78bfa" stroke-width="1"/>
+          <text x="56" y="366" text-anchor="middle" fill="#a78bfa" font-size="8" font-family="monospace">SLAG</text>
+          <line x1="80" y1="362" x2="82" y2="362" stroke="#a78bfa" stroke-width="1.5"/>
+
+          <rect x="30" y="375" width="52" height="14" rx="4" fill="rgba(251,191,36,.15)" stroke="#fbbf24" stroke-width="1"/>
+          <text x="56" y="386" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="monospace">PIG IRON</text>
+          <line x1="80" y1="382" x2="82" y2="382" stroke="#fbbf24" stroke-width="1.5"/>
+
+          <!-- CO gas rising -->
+          <path d="M160 330 Q170 310 160 295 Q150 280 160 265" stroke="#22d3ee" stroke-width="1.5" fill="none" stroke-dasharray="4 3" opacity=".6">
+            <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.5s" repeatCount="indefinite"/>
+          </path>
+          <text x="172" y="300" fill="#22d3ee" font-size="8" font-family="monospace">CO↑</text>
+
+          <!-- Labels right -->
+          <text x="250" y="72" fill="#22d3ee" font-size="8" font-family="monospace">Zone 1</text>
+          <text x="250" y="130" fill="#a78bfa" font-size="8" font-family="monospace">Zone 2</text>
+          <text x="250" y="187" fill="#fbbf24" font-size="8" font-family="monospace">Zone 3</text>
+          <text x="250" y="244" fill="#f59e0b" font-size="8" font-family="monospace">Zone 4</text>
+          <text x="250" y="302" fill="#f43f5e" font-size="8" font-family="monospace">Zone 5</text>
+        </svg>
+      </div>
+      <div>
+        <div class="blast-eqs">
+          <div class="eq-card"><div class="eq-label">step 1 — Dressing</div><div class="eq-formula">① Crushing (6–16mm)<br>② Sintering (collect small particles)<br>③ Concentration (separate solid impurities)<br>④ Roasting (remove S, P as gases)<br><span style="color:var(--orange)">S + O₂ <span class="arrow">→</span> SO₂↑</span><br><span style="color:var(--orange)">4P + 5O₂ <span class="arrow">→</span> 2P₂O₅↑</span></div></div>
+          <div class="eq-card"><div class="eq-label">step 2 — Reduction (Blast Furnace)</div><div class="eq-formula">C + O₂ <span class="arrow">→</span> CO₂ (300°C)<br>CO₂ + C <span class="arrow">→</span> 2CO (1200–1500°C)<br><br><span class="temp">@300°C:</span> 3Fe₂O₃ + CO <span class="arrow">→</span> 2Fe₃O₄ + CO₂<br><span class="temp">@500°C:</span> Fe₃O₄ + CO <span class="arrow">→</span> 3FeO + CO₂<br><span class="temp">&gt;700°C:</span> FeO + CO <span class="arrow">→</span> Fe + CO₂<br><br><span style="color:var(--cyan)">Total:</span> Fe₂O₃ + 3CO <span class="arrow">→</span> 2Fe + 3CO₂</div></div>
+          <div class="eq-card"><div class="eq-label">slag formation (limestone)</div><div class="eq-formula">CaCO₃ <span class="temp">(Δ)</span> <span class="arrow">→</span> CaO + CO₂<br>CaO + SiO₂ <span class="arrow">→</span> CaSiO₃<br><span style="color:var(--muted);font-size:.7rem">quartz (sand)       calcium silicate (slag)</span><br><br>Slag acts as filter for impurities.<br>Rich in P → used as fertilizer.</div></div>
+          <div class="eq-card"><div class="eq-label">step 3 — Production (Madrex Furnace)</div><div class="eq-formula">Reducing agent: CO + H₂ (water gas)<br>Source: 2CH₄ + CO₂ + H₂O <span class="arrow">→</span> 3CO + 5H₂<br><br>2Fe₂O₃ + 3CO + 3H₂ <span class="temp">(&gt;700°C)</span> <span class="arrow">→</span> 4Fe + 3CO₂ + 3H₂O</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IRON OXIDE CHAIN -->
+  <div class="oxide-chain fade">
+    <div class="chain-title">🔗 Iron Oxide Chain — Oxidation &amp; Reduction</div>
+    <div class="chain-svg-wrap">
+      <svg viewBox="0 0 680 160" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+        <!-- Nodes -->
+        <g>
+          <!-- Fe -->
+          <rect x="10" y="55" width="80" height="50" rx="8" fill="rgba(251,191,36,.12)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="50" y="76" text-anchor="middle" fill="#fbbf24" font-size="14" font-weight="bold" font-family="sans-serif">Fe</text>
+          <text x="50" y="92" text-anchor="middle" fill="#fbbf24" font-size="11" font-family="monospace">0</text>
+          <text x="50" y="108" text-anchor="middle" fill="#888" font-size="9" font-family="sans-serif">grey</text>
+          <!-- FeO -->
+          <rect x="150" y="55" width="80" height="50" rx="8" fill="rgba(74,222,128,.1)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="190" y="76" text-anchor="middle" fill="#4ade80" font-size="13" font-weight="bold" font-family="sans-serif">FeO</text>
+          <text x="190" y="92" text-anchor="middle" fill="#4ade80" font-size="10" font-family="monospace">+2</text>
+          <text x="190" y="108" text-anchor="middle" fill="#888" font-size="9" font-family="sans-serif">black</text>
+          <!-- Fe₃O₄ -->
+          <rect x="300" y="40" width="90" height="65" rx="8" fill="rgba(167,139,250,.12)" stroke="#a78bfa" stroke-width="2"/>
+          <text x="345" y="68" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="bold" font-family="sans-serif">Fe₃O₄</text>
+          <text x="345" y="85" text-anchor="middle" fill="#a78bfa" font-size="10" font-family="monospace">+2.6</text>
+          <text x="345" y="99" text-anchor="middle" fill="#888" font-size="9" font-family="sans-serif">black ore</text>
+          <!-- Fe₂O₃ -->
+          <rect x="450" y="55" width="80" height="50" rx="8" fill="rgba(244,63,94,.1)" stroke="#f43f5e" stroke-width="1.5"/>
+          <text x="490" y="76" text-anchor="middle" fill="#f43f5e" font-size="12" font-weight="bold" font-family="sans-serif">Fe₂O₃</text>
+          <text x="490" y="92" text-anchor="middle" fill="#f43f5e" font-size="10" font-family="monospace">+3</text>
+          <text x="490" y="108" text-anchor="middle" fill="#888" font-size="9" font-family="sans-serif">red (hematite)</text>
+        </g>
+        <!-- Oxidation arrows (top) -->
+        <path d="M90 72 L148 72" stroke="#fb923c" stroke-width="1.5" marker-end="url(#ao)"/>
+        <text x="119" y="65" text-anchor="middle" fill="#fb923c" font-size="8" font-family="monospace">+O₂@500°C</text>
+        <path d="M230 68 L298 65" stroke="#fb923c" stroke-width="1.5" marker-end="url(#ao)"/>
+        <text x="264" y="58" text-anchor="middle" fill="#fb923c" font-size="8" font-family="monospace">+O₂@230-300°C</text>
+        <path d="M392 68 L448 72" stroke="#fb923c" stroke-width="1.5" marker-end="url(#ao)"/>
+        <text x="420" y="62" text-anchor="middle" fill="#fb923c" font-size="8" font-family="monospace">+O₂@400-700°C</text>
+        <!-- Reduction arrows (bottom) -->
+        <path d="M148 95 L90 95" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ar)"/>
+        <text x="119" y="115" text-anchor="middle" fill="#22d3ee" font-size="8" font-family="monospace">+H₂@400-700°C</text>
+        <path d="M298 95 L230 90" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ar)"/>
+        <text x="264" y="118" text-anchor="middle" fill="#22d3ee" font-size="8" font-family="monospace">+H₂@230-300°C</text>
+        <path d="M448 92 L392 90" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ar)"/>
+        <text x="420" y="115" text-anchor="middle" fill="#22d3ee" font-size="8" font-family="monospace">+H₂ or +CO@&gt;700°C</text>
+        <!-- Direct arrow Fe₂O₃ to Fe -->
+        <path d="M488 105 Q488 145 345 145 Q190 145 88 105" stroke="#4ade80" stroke-width="1.2" fill="none" stroke-dasharray="5 3" marker-end="url(#ag)"/>
+        <text x="310" y="160" text-anchor="middle" fill="#4ade80" font-size="8" font-family="monospace">+CO or +H₂ direct (&gt;700°C)</text>
+        <!-- Legend labels top -->
+        <text x="340" y="15" text-anchor="middle" fill="#fb923c" font-size="9" font-family="sans-serif">OXIDATION →</text>
+        <text x="340" y="30" text-anchor="middle" fill="#22d3ee" font-size="9" font-family="sans-serif">← REDUCTION</text>
+        <!-- Arrow markers -->
+        <defs>
+          <marker id="ao" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#fb923c"/>
+          </marker>
+          <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#22d3ee"/>
+          </marker>
+          <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#4ade80"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
+  <!-- IRON CHEMICAL REACTIONS -->
+  <h3 class="rxn-title">Chemical Reactions of Iron</h3>
+  <div class="rxn-grid fade">
+    <div class="rxn-box">
+      <div class="rxn-box-title">① Reaction with O₂ (dry air)</div>
+      <div class="rxn-eq">3Fe + 2O₂ <span style="color:var(--gold)">—[500°C]→</span> Fe₃O₄</div>
+      <div class="rxn-note">Fe→grey, Fe₃O₄→black (increase in mass)<br><span class="hl">★ NOT Fe₂O₃</span> — O₂ is oxidizing agent but NOT strong enough to reach max oxidation state (+6 or even +3) in this reaction.</div>
+    </div>
+    <div class="rxn-box">
+      <div class="rxn-box-title">② Reaction with Humidity (H₂O vapour)</div>
+      <div class="rxn-eq">3Fe + 4H₂O(v) <span style="color:var(--gold)">—[500°C]→</span> Fe₃O₄ + 4H₂</div>
+      <div class="rxn-note"><span class="hl">★ NOT Fe₂O₃</span> — H₂ produced is a strong reducing agent that PREVENTS reaching maximum oxidation state.<br>★ Differentiate: dry O₂ → Fe₃O₄ only; humid air → Fe₃O₄ + H₂ (H₂ detected by pop sound with burning)</div>
+    </div>
+    <div class="rxn-box">
+      <div class="rxn-box-title">③ Reaction with Halogens (Cl₂, Br₂, I₂)</div>
+      <div class="rxn-eq">2Fe + 3Cl₂ <span style="color:var(--gold)">—[Δ]→</span> 2FeCl₃<br>2Fe + 3Br₂ <span style="color:var(--gold)">—[Δ]→</span> 2FeBr₃<br>2Fe + 3I₂ <span style="color:var(--gold)">—[Δ]→</span> 2FeI₃</div>
+      <div class="rxn-note">Halogenation power: Cl₂ &gt; Br₂ &gt; I₂<br>Group 7A → elements further right = stronger oxidizing agent</div>
+    </div>
+    <div class="rxn-box">
+      <div class="rxn-box-title">④ Reaction with HCl (dilute or concentrated)</div>
+      <div class="rxn-eq">Fe + 2HCl <span style="color:var(--gold)">—[dil. or conc.]→</span> FeCl₂ + H₂</div>
+      <div class="rxn-note">Fe→grey (no change in mass), FeCl₂→<span style="color:#4ade80">green</span><br><span class="hl">★ NOT FeCl₃</span> — H₂ is strong reducing agent preventing max oxidation state. H₂ also converts any FeCl₃ formed back to FeCl₂.</div>
+    </div>
+    <div class="rxn-box">
+      <div class="rxn-box-title">⑤ Reaction with H₂SO₄ dilute</div>
+      <div class="rxn-eq">Fe + H₂SO₄(dil) <span style="color:var(--gold)">→</span> FeSO₄ + H₂↑</div>
+      <div class="rxn-note">Fe→grey, FeSO₄→<span style="color:#4ade80">green</span><br>H₂ detected by pop sound with burning flame.</div>
+    </div>
+    <div class="rxn-box">
+      <div class="rxn-box-title">⑥ Reaction with H₂SO₄ concentrated</div>
+      <div class="rxn-eq">3Fe + 8H₂SO₄(conc) → FeSO₄ + Fe₂(SO₄)₃ + 4SO₂ + 8H₂O</div>
+      <div class="rxn-note">Conc. H₂SO₄ is very strong oxidizing agent — oxidizes H₂ into H₂O, overcoming its reducing effect.<br>Fe→ FeSO₄ (Fe²⁺, <span style="color:#4ade80">green</span>) THEN Fe₂(SO₄)₃ (Fe³⁺, <span style="color:#fde047">yellow</span>)</div>
+    </div>
+    <div class="rxn-box">
+      <div class="rxn-box-title">⑦ Reaction with Conc. HNO₃ (Passivity)</div>
+      <div class="rxn-eq">Fe + Conc. HNO₃ → FeO (passivity layer)<br>Before:After ratio = 1:~1</div>
+      <div class="rxn-note">Conc. HNO₃ causes <strong>passivity</strong> — forms FeO protective layer that prevents further reaction.<br>Piece of iron put 2 days in conc. HNO₃ then in dil. HCl → delayed H₂ bubbles due to passivity.<br>Remove passivity: chemically (dil. HCl) or physically (abrasion)</div>
+    </div>
+    <div class="rxn-box">
+      <div class="rxn-box-title">⑧ Roasting of Ores</div>
+      <div class="rxn-eq"><span style="color:#fbbf24">Limonite:</span><br>2Fe₂O₃·3H₂O <span style="color:var(--gold)">—[Δ]→</span> 2Fe₂O₃ + 3H₂O<br><span style="color:#60a5fa">Siderite:</span><br>2FeCO₃ <span style="color:var(--gold)">—[Δ]→</span> 2FeO + 2CO₂<br>2FeO + ½O₂ <span style="color:var(--gold)">—[400-700°C]→</span> Fe₂O₃<br><span style="color:#f43f5e">FeC₂O₄ (oxalate):</span><br>2FeC₂O₄ + 3/2O₂ <span style="color:var(--gold)">—[Δ]→</span> Fe₂O₃ + 4CO₂</div>
+      <div class="rxn-note">All end up as hematite (Fe₂O₃) for extraction.</div>
+    </div>
+  </div>
+
+  <!-- IRON TYPES -->
+  <h3 class="rxn-title" style="margin-top:40px">Types of Iron Products</h3>
+  <div class="iron-types-grid fade">
+    <div class="itype itype-pig">
+      <div class="itype-name">Pig Iron (الحديد الخام)</div>
+      <div class="itype-formula">~94% Fe + C(4%) + Si + Mn + P + S</div>
+      <div class="itype-detail">
+        <ul style="list-style:none">
+          <li style="padding:4px 0">• Direct product from blast furnace</li>
+          <li style="padding:4px 0">• Very brittle, high carbon content</li>
+          <li style="padding:4px 0">• Low melting point due to carbon</li>
+          <li style="padding:4px 0">• Used to make cast iron &amp; steel</li>
+        </ul>
+      </div>
+    </div>
+    <div class="itype itype-cast">
+      <div class="itype-name">Cast Iron (الحديد الزهر)</div>
+      <div class="itype-formula">Fe + C(2–4%) + impurities</div>
+      <div class="itype-detail">
+        <ul style="list-style:none">
+          <li style="padding:4px 0">• Made from pig iron with less carbon</li>
+          <li style="padding:4px 0">• Hard but brittle (cannot be forged)</li>
+          <li style="padding:4px 0">• Used in pipes, engine blocks</li>
+          <li style="padding:4px 0">• Fe₃C (cementite) is an intermetallic</li>
+        </ul>
+      </div>
+    </div>
+    <div class="itype itype-steel">
+      <div class="itype-name">Steel (الصلب)</div>
+      <div class="itype-formula">Fe–C–Ni–Si–Cr (C &lt; 2%)</div>
+      <div class="itype-detail">
+        <ul style="list-style:none">
+          <li style="padding:4px 0">• Pig iron + reducing carbon + adding alloys</li>
+          <li style="padding:4px 0">• Strong, ductile, not brittle</li>
+          <li style="padding:4px 0">• Stainless steel = Fe + Cr (passivity)</li>
+          <li style="padding:4px 0">• Construction, tools, cars, bridges</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════ PHYSICAL PROPERTIES ══════════════════════════ -->
+<section id="physical">
+<div class="inner">
+  <div class="section-tag">06 — Physical Properties</div>
+  <h2 class="section-title">Physical <span>Properties</span></h2>
+  <div class="phys-grid">
+    <div class="phys-card fade">
+      <div class="phys-icon">⚡</div>
+      <div class="phys-title">Ionization Potential</div>
+      <div class="phys-body">Energy absorbed by an element in gaseous state to lose one electron and form a +ve ion (endothermic, ΔH = +ve).<br><br><strong>Rule: High stability = Low ionization energy</strong></div>
+      <div class="phys-highlight">3rd I.P. &gt; 2nd I.P. &gt; 1st I.P.<br>Fe: [Ar]4s²3d⁶ → stability at d⁵ → high 3rd I.P.<br>Transition elements have MULTIPLE ionization states</div>
+    </div>
+    <div class="phys-card fade">
+      <div class="phys-icon">⚛️</div>
+      <div class="phys-title">Atomic Radius</div>
+      <div class="phys-body">Half the distance between centres of 2 nuclei in a diatomic molecule (Heisenberg principle: cannot detect exact position + velocity of electron simultaneously).<br><br>Factors: <strong>Attraction forces</strong> (↑ protons → ↑ attraction → ↓ radius) and <strong>Repulsion forces</strong> (↑ e⁻ → ↑ repulsion → ↑ radius)</div>
+      <div class="phys-highlight">Largest atom in 1st series: <strong>Sc (21)</strong><br>Smallest atom in 1st series: <strong>Ni (28)</strong><br>Cr–Mn–Cu: relative stability in atomic radius<br>Fe = Co (approximately equal radius)</div>
+    </div>
+    <div class="phys-card fade">
+      <div class="phys-icon">🧲</div>
+      <div class="phys-title">Magnetic Properties</div>
+      <div class="phys-body">Any charged particle revolving around its axis creates a magnetic field and attracts external magnets (spin motion).<br><br><strong>Paramagnetic</strong> = has single (unpaired) electrons in d-sublevel → coloured solutions<br><strong>Diamagnetic</strong> = no single electrons in d-sublevel → colourless</div>
+      <div class="phys-highlight">Diamagnetic in 1st series: Sc³⁺, Ti⁴⁺, V⁵⁺, Cr⁶⁺, Mn⁷⁺, Cu, Cu⁺¹, Zn, Zn²⁺<br>Group 8 (Fe, Co, Ni) &amp; compounds = always paramagnetic &amp; coloured<br>Zn = ONLY element all states are diamagnetic</div>
+    </div>
+    <div class="phys-card fade">
+      <div class="phys-icon">⚗️</div>
+      <div class="phys-title">Metallic Properties</div>
+      <div class="phys-body">All transition elements have <strong>general metallic properties</strong>: shiny metallic lustre, good conductor of electricity &amp; heat, tend to lose electrons forming +ve ions.</div>
+      <div class="phys-highlight">Density: all high &amp; higher than other elements in periodic table. ↑ atomic number → ↑ density<br>M.P. &amp; B.P.: VERY HIGH due to large number of valence electrons lost from 4s &amp; 3d → strong metallic bonds</div>
+    </div>
+    <div class="phys-card fade">
+      <div class="phys-icon">🎨</div>
+      <div class="phys-title">Coloured Solutions</div>
+      <div class="phys-body">Coloured solutions contain a transition element with <strong>single electrons in the d-sublevel</strong>. All paramagnetic = coloured. Exception: KMnO₄ (Mn⁷⁺ diamagnetic but violet by charge transfer).</div>
+      <div class="phys-highlight">Fe³⁺ → pale yellow (except Fe(SCN)₃ = blood red)<br>Fe²⁺, Cr³⁺, Ni²⁺ → green (except FeC₂O₄ = yellow)<br>Cu²⁺, V³⁺ → blue<br>KMnO₄ → violet (exception)<br>K₂Cr₂O₇ → orange (exception)<br>V₂O₅ → blue-green (exception)</div>
+    </div>
+    <div class="phys-card fade">
+      <div class="phys-icon">🔬</div>
+      <div class="phys-title">Alloy Types</div>
+      <div class="phys-body">Alloy = mixture between metal and element(s). Must contain at least one metal (non-metal + non-metal is NOT an alloy).</div>
+      <div class="phys-highlight">① Substitution alloy: one metal distorts crystal lattice of another (e.g. Mn-Fe, Ni-Cr, Au-Cu)<br>② Interstitial alloy: small molecules fill intermolecular spaces (e.g. Fe-C in steel, X=1.17Å, C=0.02Å)<br>③ Intermetallic: chemical connections (e.g. Fe₃C cementite, Au₂Pb, Ni₃Al)</div>
+    </div>
+  </div>
+
+  <!-- Coloured solutions visual -->
+  <h3 style="font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text);margin-top:48px;margin-bottom:20px">Coloured Solutions of Transition Element Ions</h3>
+  <div class="colors-grid fade">
+    <div class="color-card col-green"><div class="color-formula">Fe²⁺</div><div class="color-swatch"></div><div class="color-name">Green</div></div>
+    <div class="color-card col-paley"><div class="color-formula">Fe³⁺</div><div class="color-swatch"></div><div class="color-name">Pale Yellow</div></div>
+    <div class="color-card col-red"><div class="color-formula">Fe(SCN)₃</div><div class="color-swatch"></div><div class="color-name">Blood Red</div></div>
+    <div class="color-card col-yellow"><div class="color-formula">FeC₂O₄</div><div class="color-swatch"></div><div class="color-name">Yellow</div></div>
+    <div class="color-card col-blue"><div class="color-formula">Cu²⁺</div><div class="color-swatch"></div><div class="color-name">Blue</div></div>
+    <div class="color-card col-blg"><div class="color-formula">Cr³⁺ / Ni²⁺</div><div class="color-swatch"></div><div class="color-name">Green</div></div>
+    <div class="color-card col-violet"><div class="color-formula">KMnO₄</div><div class="color-swatch"></div><div class="color-name">Violet (exception)</div></div>
+    <div class="color-card col-orange"><div class="color-formula">K₂Cr₂O₇</div><div class="color-swatch"></div><div class="color-name">Orange (exception)</div></div>
+    <div class="color-card col-blg"><div class="color-formula">V₂O₅</div><div class="color-swatch" style="background:#22d3ee"></div><div class="color-name">Blue-Green (exception)</div></div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════ OXIDATION NUMBERS ══════════════════════════ -->
+<section id="oxidation">
+<div class="inner">
+  <div class="section-tag">07 — Redox Chemistry</div>
+  <h2 class="section-title">Oxidation <span>Numbers</span></h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:36px">
+    <div class="ov-card fade">
+      <h3 style="color:var(--red)">Oxidation = Lose Electrons</h3>
+      <p>Increase in oxidation number</p>
+      <div class="code-box">Fe²⁺ → <span class="hl">Fe³⁺</span> (oxidation)<br>[Ar]3d⁶ → [Ar]3d⁵ (more stable d⁵)<br>Fe²⁺→Fe³⁺ <span style="color:var(--green)">MORE EASY</span> (reaches stability)</div>
+    </div>
+    <div class="ov-card fade">
+      <h3 style="color:var(--teal)">Reduction = Gain Electrons</h3>
+      <p>Decrease in oxidation number</p>
+      <div class="code-box">Mn³⁺ → <span class="hl2">Mn²⁺</span> (reduction)<br>[Ar]3d⁴ → [Ar]3d⁵ (more stable d⁵)<br>Mn³⁺→Mn²⁺ <span style="color:var(--green)">MORE EASY</span> (reaches stability)</div>
+    </div>
+  </div>
+  <!-- Oxidation states table -->
+  <div class="ox-table-wrap fade" style="margin-bottom:40px">
+    <table>
+      <thead><tr><th>Element</th><th>Z</th><th>Config</th><th>Oxidation States</th><th>Most Common Oxide</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td style="color:#22d3ee;font-family:'Sora',sans-serif;font-weight:700">Scandium (Sc)</td><td style="font-family:'Space Mono',monospace">21</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s²3d¹</td><td><div class="ox-tags"><span class="ox-tag max">+3</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--cyan)">Sc₂O₃ (Sc³⁺)</td><td style="font-size:.78rem;color:var(--muted)">Only +3</td></tr>
+        <tr><td style="color:#2dd4bf;font-family:'Sora',sans-serif;font-weight:700">Titanium (Ti)</td><td style="font-family:'Space Mono',monospace">22</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s²3d²</td><td><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag">+3</span><span class="ox-tag max">+4</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--teal)">TiO₂ (Ti⁴⁺)</td><td style="font-size:.78rem;color:var(--muted)">Most stable: +4</td></tr>
+        <tr><td style="color:#a78bfa;font-family:'Sora',sans-serif;font-weight:700">Vanadium (V)</td><td style="font-family:'Space Mono',monospace">23</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s²3d³</td><td><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag">+3</span><span class="ox-tag">+4</span><span class="ox-tag max">+5</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--purple)">V₂O₅ (V⁵⁺)</td><td style="font-size:.78rem;color:var(--muted)">+6 very difficult</td></tr>
+        <tr><td style="color:#f59e0b;font-family:'Sora',sans-serif;font-weight:700">Chromium (Cr)</td><td style="font-family:'Space Mono',monospace">24</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s¹3d⁵</td><td><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag">+3</span><span class="ox-tag">+4</span><span class="ox-tag">+5</span><span class="ox-tag max">+6</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--gold)">Cr₂O₃ (Cr³⁺)</td><td style="font-size:.78rem;color:var(--muted)">Famous: +3 and +6</td></tr>
+        <tr><td style="color:#f43f5e;font-family:'Sora',sans-serif;font-weight:700">Manganese (Mn)</td><td style="font-family:'Space Mono',monospace">25</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s²3d⁵</td><td><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag">+3</span><span class="ox-tag">+4</span><span class="ox-tag">+5</span><span class="ox-tag">+6</span><span class="ox-tag max">+7</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--red)">MnO₂ (Mn⁴⁺)</td><td style="font-size:.78rem;color:var(--muted)">MAX in 1st series = +7</td></tr>
+        <tr><td style="color:#fbbf24;font-family:'Sora',sans-serif;font-weight:700">Iron (Fe) ⭐</td><td style="font-family:'Space Mono',monospace">26</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s²3d⁶</td><td><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag max">+3</span><span class="ox-tag" style="opacity:.5">+6</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--amber)">Fe₂O₃ (Fe³⁺)</td><td style="font-size:.78rem;color:var(--muted)">+6 rare, no economic use</td></tr>
+        <tr><td style="color:#60a5fa;font-family:'Sora',sans-serif;font-weight:700">Cobalt (Co)</td><td style="font-family:'Space Mono',monospace">27</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s²3d⁷</td><td><div class="ox-tags"><span class="ox-tag">+2</span><span class="ox-tag max">+3</span><span class="ox-tag">+4</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--blue)">CoO (Co²⁺)</td><td style="font-size:.78rem;color:var(--muted)">Most common: +2</td></tr>
+        <tr><td style="color:#4ade80;font-family:'Sora',sans-serif;font-weight:700">Nickel (Ni)</td><td style="font-family:'Space Mono',monospace">28</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s²3d⁸</td><td><div class="ox-tags"><span class="ox-tag max">+2</span><span class="ox-tag" style="opacity:.5">+3 rare</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--green)">NiO (Ni²⁺)</td><td style="font-size:.78rem;color:var(--muted)">Almost only +2</td></tr>
+        <tr><td style="color:#fb923c;font-family:'Sora',sans-serif;font-weight:700">Copper (Cu)</td><td style="font-family:'Space Mono',monospace">29</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s¹3d¹⁰</td><td><div class="ox-tags"><span class="ox-tag max">+1</span><span class="ox-tag">+2</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:var(--orange)">CuO (Cu²⁺)</td><td style="font-size:.78rem;color:var(--muted)">MIN in 1st series = +1</td></tr>
+        <tr><td style="color:#818cf8;font-family:'Sora',sans-serif;font-weight:700">Zinc (Zn)</td><td style="font-family:'Space Mono',monospace">30</td><td style="font-family:'Space Mono',monospace;font-size:.78rem;color:var(--muted)">[Ar]4s²3d¹⁰</td><td><div class="ox-tags"><span class="ox-tag max">+2</span></div></td><td style="font-family:'Space Mono',monospace;font-size:.82rem;color:#818cf8">ZnO (Zn²⁺)</td><td style="font-size:.78rem;color:var(--muted)">ONLY +2 (not true transition)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Rules -->
+  <h3 style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:18px">10 Rules for Calculating Oxidation Number</h3>
+  <div class="rules-grid fade">
+    <div class="rule"><div class="rule-n">01</div><div class="rule-body">Oxidation number of any element in pure form = <code>0</code> (Na, Ar, H₂, O₂, Cl₂, Fe)</div></div>
+    <div class="rule"><div class="rule-n">02</div><div class="rule-body">Group IA elements in compounds = <code>+1</code> (Li, Na, K, Rb, Cs)</div></div>
+    <div class="rule"><div class="rule-n">03</div><div class="rule-body">Group IIA elements in compounds = <code>+2</code> (Mg, Ca, Ba, Sr)</div></div>
+    <div class="rule"><div class="rule-n">04</div><div class="rule-body">Group IIIA elements in compounds = <code>+3</code> (Al³⁺)</div></div>
+    <div class="rule"><div class="rule-n">05</div><div class="rule-body">Fluorine in all compounds = <code>−1</code> (most electronegative)</div></div>
+    <div class="rule"><div class="rule-n">06</div><div class="rule-body">Halogens (Group VIIA) in compounds = <code>−1</code> mostly (Cl⁻, Br⁻, I⁻)</div></div>
+    <div class="rule"><div class="rule-n">07</div><div class="rule-body">Oxygen in compounds = <code>−2</code> mostly (except peroxides = −1, OF₂ = +2)</div></div>
+    <div class="rule"><div class="rule-n">08</div><div class="rule-body">Hydrogen in compounds = <code>+1</code> mostly (except metal hydrides = −1)</div></div>
+    <div class="rule"><div class="rule-n">09</div><div class="rule-body">Sum of all oxidation numbers in a compound = <code>zero</code>. Example: KMnO₄ → (+1)+Mn+4(−2)=0, Mn=<code>+7</code></div></div>
+    <div class="rule"><div class="rule-n">10</div><div class="rule-body">Sum of oxidation numbers in an atomic group = its <code>charge</code>. NH₄⁺: N+4H=+1; NO₃⁻: N+3O=−1</div></div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════ KEY NOTES ══════════════════════════ -->
+<section id="keynotes">
+<div class="inner">
+  <div class="section-tag">08 — Exam Preparation ★</div>
+  <h2 class="section-title">Key Notes & <span>Exam Tips</span></h2>
+  <div class="notes-grid">
+    <div class="note note-c fade">
+      <div class="note-ico">🧬</div>
+      <div class="note-hd">Anomalous Config Rule</div>
+      <div class="note-bd">Electron "jumps" from <strong>4s → 3d</strong> to achieve half-filled (d⁵) or completely filled (d¹⁰) — both are extra-stable configurations.</div>
+      <div class="note-hl">Cr: [Ar] 4s¹ 3d⁵ (not 4s² 3d⁴)<br>Cu: [Ar] 4s¹ 3d¹⁰ (not 4s² 3d⁹)<br>Mo, Ag, Au follow same pattern</div>
+    </div>
+    <div class="note note-g fade">
+      <div class="note-ico">⚡</div>
+      <div class="note-hd">Electron Removal Order</div>
+      <div class="note-bd">Always lose electrons from <strong>outermost sublevel first</strong> — s before d (s is farther from nucleus).</div>
+      <div class="note-hl">Cu: [Ar] 4s¹ 3d¹⁰ (atomic)<br>Cu⁺¹: [Ar] 3d¹⁰ (s lost first)<br>Cu⁺²: [Ar] 3d⁹ (then d lost)</div>
+    </div>
+    <div class="note note-t fade">
+      <div class="note-ico">🔢</div>
+      <div class="note-hd">d⁴ &amp; d⁹ Don't Exist in Elemental Form</div>
+      <div class="note-bd">Due to anomalous configs, <strong>d⁴ and d⁹ spontaneously convert</strong> to d⁵ or d¹⁰ in elemental form. But they CAN exist in ionic form!</div>
+      <div class="note-hl">Cr²⁺: [Ar] 3d⁴ ← ionic (exists)<br>Cu²⁺: [Ar] 3d⁹ ← ionic (exists)<br>Cr (elemental): always d⁵ ✓</div>
+    </div>
+    <div class="note note-r fade">
+      <div class="note-ico">📊</div>
+      <div class="note-hd">Iron Reaction Key Points</div>
+      <div class="note-bd">Fe reacts to form <strong>Fe₃O₄ (not Fe₂O₃)</strong> with both dry O₂ and humidity because O₂ is not strong enough and H₂ is a reducing agent preventing max oxidation.</div>
+      <div class="note-hl">Fe + dry O₂ → Fe₃O₄ only<br>Fe + H₂O(v) → Fe₃O₄ + H₂↑<br>Fe + HCl → FeCl₂ + H₂↑ (green)<br>H₂ = detected by pop sound + burn</div>
+    </div>
+    <div class="note note-p fade">
+      <div class="note-ico">🧲</div>
+      <div class="note-hd">Special Alloys to Remember</div>
+      <div class="note-bd">Key alloys frequently tested in exams — remember composition and uses.</div>
+      <div class="note-hl">Stainless Steel = Fe + Cr<br>Bronze = Cu + Sn (statues, medals)<br>Brass = Cu + Zn (door handles)<br>Nitinol = Ti + Ni (teeth corrections)<br>Steel = Fe + C + Ni + Si + Cr<br>Sc-Al = MIG jets, weapons</div>
+    </div>
+    <div class="note note-o fade">
+      <div class="note-ico">⚗️</div>
+      <div class="note-hd">Catalysts Summary</div>
+      <div class="note-bd">Transition metals are excellent catalysts due to multiple oxidation states and ability to form intermediate compounds.</div>
+      <div class="note-hl">V₂O₅ → SO₂→SO₃ (Contact, 450°C)<br>V₂O₅ → Benzoic acid (400°C)<br>Fe/Mo → Haber-Bosch NH₃<br>FeCl₃ → Halogenation benzene<br>MnO₂ → H₂O₂ decomposition<br>Ni → Hydrogenation veg. oils<br>ZnCl₂ → Alcohol reactions<br>CuCrO₄ → Reduce carboxylic acids</div>
+    </div>
+    <div class="note note-c fade">
+      <div class="note-ico">🎨</div>
+      <div class="note-hd">Colours of Solutions</div>
+      <div class="note-bd">Paramagnetic = coloured. Group 8 (Fe, Co, Ni) compounds always coloured. Exceptions exist for diamagnetic compounds due to charge transfer.</div>
+      <div class="note-hl">Fe²⁺ = green · Fe³⁺ = pale yellow<br>Fe(SCN)₃ = blood red (exception)<br>Cu²⁺ / V³⁺ = blue<br>KMnO₄ = violet (diamagnetic exception)<br>K₂Cr₂O₇ = orange (exception)<br>Zn = only all-diamagnetic element</div>
+    </div>
+    <div class="note note-g fade">
+      <div class="note-ico">🔍</div>
+      <div class="note-hd">Iron Ores — Quick Comparison</div>
+      <div class="note-bd">Only <strong>Hematite</strong> is used for extraction because it has high Fe% (69.6%) and is easy to reduce. Others must be roasted first.</div>
+      <div class="note-hl">Hematite Fe₂O₃ → red, 69.6% ✓ USED<br>Limonite 2Fe₂O₃·3H₂O → yellow, 45%<br>Siderite FeCO₃ → grey, 48%<br>Magnetite Fe₃O₄ → black, 70% ✗ magnetic</div>
+    </div>
+    <div class="note note-t fade">
+      <div class="note-ico">🏥</div>
+      <div class="note-hd">Medical Applications</div>
+      <div class="note-bd">Several transition elements have crucial medical uses frequently tested in exams.</div>
+      <div class="note-hl">Ti (pure) → implants, joints, bone plates<br>TiO₂ (nano) → UV sunblock<br>Ti–Ni → teeth corrections<br>Co-60 → cancer detection &amp; treatment<br>KMnO₄ → antiseptic, disinfectant<br>CuSO₄ (Fehling) → detect glucose<br>Sc–Hg lamp → photographic TV, stadiums</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════ WATCH VIDEO ══════════════════════════ -->
+<div id="watch">
+  <div style="font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:16px">📺 Bonus Resource</div>
+  <a class="watch-card" href="https://youtu.be/xRfwXBitjc8?si=JlvmOsL4PEQ0065p" target="_blank" rel="noopener">
+    <div class="watch-emoji">🧽⚗️</div>
+    <div class="watch-title">SpongeBob Teaches Chemistry!</div>
+    <p class="watch-sub">Watch this fun video to reinforce your understanding of transition elements — because learning should be fun!</p>
+    <div class="watch-btn">▶ Watch on YouTube</div>
+  </a>
+</div>
+
+<footer>
+  <div style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;color:var(--cyan);margin-bottom:8px">⚗ Transition Elements — Complete Study Guide 2026</div>
+  <p>First Transition Series · Sc (21) → Zn (30) · d-Block · 109 pages of handwritten notes</p>
+  <p style="margin-top:6px">Made with ❤️ for chemistry students · <span>All content from PDF notes</span></p>
+</footer>
+
+<!-- ══════════════════════════ SCRIPTS ══════════════════════════ -->
+<script>
+/* ─── PARTICLES ─── */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize(); window.addEventListener('resize', resize);
+class P {
+  constructor(){this.reset()}
+  reset(){
+    this.x=Math.random()*W; this.y=Math.random()*H;
+    this.vx=(Math.random()-.5)*.25; this.vy=(Math.random()-.5)*.25;
+    this.r=Math.random()*1.5+.3;
+    this.life=Math.random()*200; this.maxLife=Math.random()*200+80;
+    this.col=Math.random()>.5?'34,211,238':'251,191,36';
+  }
+  update(){this.x+=this.vx; this.y+=this.vy; this.life++;
+    if(this.life>this.maxLife||this.x<0||this.x>W||this.y<0||this.y>H)this.reset()}
+  draw(){
+    const a=Math.sin((this.life/this.maxLife)*Math.PI)*.5;
+    ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${this.col},${a})`; ctx.fill();
+  }
+}
+for(let i=0;i<100;i++)particles.push(new P());
+function animate(){
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p=>{p.update();p.draw()});
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<90){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(34,211,238,${.06*(1-d/90)})`;ctx.lineWidth=.5;ctx.stroke()}
+    }
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ─── PERIODIC TABLE ─── */
+const elements = [
+  // Period 1
+  {z:1,sym:'H',name:'Hyd.',col:1,row:1,type:'rep'},
+  {z:2,sym:'He',name:'Hel.',col:18,row:1,type:'noble'},
+  // Period 2
+  {z:3,sym:'Li',name:'Lit.',col:1,row:2,type:'rep'},{z:4,sym:'Be',name:'Ber.',col:2,row:2,type:'rep'},
+  {z:5,sym:'B',name:'Bor.',col:13,row:2,type:'rep'},{z:6,sym:'C',name:'Car.',col:14,row:2,type:'rep'},
+  {z:7,sym:'N',name:'Nit.',col:15,row:2,type:'rep'},{z:8,sym:'O',name:'Oxy.',col:16,row:2,type:'rep'},
+  {z:9,sym:'F',name:'Flu.',col:17,row:2,type:'rep'},{z:10,sym:'Ne',name:'Neo.',col:18,row:2,type:'noble'},
+  // Period 3
+  {z:11,sym:'Na',name:'Sod.',col:1,row:3,type:'rep'},{z:12,sym:'Mg',name:'Mag.',col:2,row:3,type:'rep'},
+  {z:13,sym:'Al',name:'Alu.',col:13,row:3,type:'rep'},{z:14,sym:'Si',name:'Sil.',col:14,row:3,type:'rep'},
+  {z:15,sym:'P',name:'Pho.',col:15,row:3,type:'rep'},{z:16,sym:'S',name:'Sul.',col:16,row:3,type:'rep'},
+  {z:17,sym:'Cl',name:'Chl.',col:17,row:3,type:'rep'},{z:18,sym:'Ar',name:'Arg.',col:18,row:3,type:'noble'},
+  // Period 4 - full with 1st transition series
+  {z:19,sym:'K',name:'Pot.',col:1,row:4,type:'rep'},{z:20,sym:'Ca',name:'Cal.',col:2,row:4,type:'rep'},
+  {z:21,sym:'Sc',name:'Scan.',col:3,row:4,type:'first'},{z:22,sym:'Ti',name:'Tit.',col:4,row:4,type:'first'},
+  {z:23,sym:'V',name:'Van.',col:5,row:4,type:'first'},{z:24,sym:'Cr',name:'Chr.',col:6,row:4,type:'first'},
+  {z:25,sym:'Mn',name:'Man.',col:7,row:4,type:'first'},{z:26,sym:'Fe',name:'Iron',col:8,row:4,type:'iron'},
+  {z:27,sym:'Co',name:'Cob.',col:9,row:4,type:'first'},{z:28,sym:'Ni',name:'Nic.',col:10,row:4,type:'first'},
+  {z:29,sym:'Cu',name:'Cop.',col:11,row:4,type:'first'},{z:30,sym:'Zn',name:'Zinc',col:12,row:4,type:'first'},
+  {z:31,sym:'Ga',name:'Gal.',col:13,row:4,type:'rep'},{z:32,sym:'Ge',name:'Ger.',col:14,row:4,type:'rep'},
+  {z:33,sym:'As',name:'Ars.',col:15,row:4,type:'rep'},{z:34,sym:'Se',name:'Sel.',col:16,row:4,type:'rep'},
+  {z:35,sym:'Br',name:'Bro.',col:17,row:4,type:'rep'},{z:36,sym:'Kr',name:'Kry.',col:18,row:4,type:'noble'},
+  // Period 5
+  {z:37,sym:'Rb',name:'Rub.',col:1,row:5,type:'rep'},{z:38,sym:'Sr',name:'Str.',col:2,row:5,type:'rep'},
+  {z:39,sym:'Y',name:'Ytr.',col:3,row:5,type:'trans'},{z:40,sym:'Zr',name:'Zir.',col:4,row:5,type:'trans'},
+  {z:41,sym:'Nb',name:'Nio.',col:5,row:5,type:'trans'},{z:42,sym:'Mo',name:'Mol.',col:6,row:5,type:'trans'},
+  {z:43,sym:'Tc',name:'Tec.',col:7,row:5,type:'trans'},{z:44,sym:'Ru',name:'Rut.',col:8,row:5,type:'trans'},
+  {z:45,sym:'Rh',name:'Rho.',col:9,row:5,type:'trans'},{z:46,sym:'Pd',name:'Pal.',col:10,row:5,type:'trans'},
+  {z:47,sym:'Ag',name:'Sil.',col:11,row:5,type:'trans'},{z:48,sym:'Cd',name:'Cad.',col:12,row:5,type:'trans'},
+  {z:49,sym:'In',name:'Ind.',col:13,row:5,type:'rep'},{z:50,sym:'Sn',name:'Tin',col:14,row:5,type:'rep'},
+  {z:51,sym:'Sb',name:'Ant.',col:15,row:5,type:'rep'},{z:52,sym:'Te',name:'Tel.',col:16,row:5,type:'rep'},
+  {z:53,sym:'I',name:'Iod.',col:17,row:5,type:'rep'},{z:54,sym:'Xe',name:'Xen.',col:18,row:5,type:'noble'},
+  // Period 6
+  {z:55,sym:'Cs',name:'Cae.',col:1,row:6,type:'rep'},{z:56,sym:'Ba',name:'Bar.',col:2,row:6,type:'rep'},
+  {z:57,sym:'La',name:'Lan.',col:3,row:6,type:'inner'},
+  {z:72,sym:'Hf',name:'Haf.',col:4,row:6,type:'trans'},{z:73,sym:'Ta',name:'Tan.',col:5,row:6,type:'trans'},
+  {z:74,sym:'W',name:'Tun.',col:6,row:6,type:'trans'},{z:75,sym:'Re',name:'Rhe.',col:7,row:6,type:'trans'},
+  {z:76,sym:'Os',name:'Osm.',col:8,row:6,type:'trans'},{z:77,sym:'Ir',name:'Iri.',col:9,row:6,type:'trans'},
+  {z:78,sym:'Pt',name:'Pla.',col:10,row:6,type:'trans'},{z:79,sym:'Au',name:'Gold',col:11,row:6,type:'trans'},
+  {z:80,sym:'Hg',name:'Mer.',col:12,row:6,type:'trans'},
+  {z:81,sym:'Tl',name:'Tha.',col:13,row:6,type:'rep'},{z:82,sym:'Pb',name:'Lead',col:14,row:6,type:'rep'},
+  {z:83,sym:'Bi',name:'Bis.',col:15,row:6,type:'rep'},{z:84,sym:'Po',name:'Pol.',col:16,row:6,type:'rep'},
+  {z:85,sym:'At',name:'Ast.',col:17,row:6,type:'rep'},{z:86,sym:'Rn',name:'Rad.',col:18,row:6,type:'noble'},
+  // Period 7
+  {z:87,sym:'Fr',name:'Fra.',col:1,row:7,type:'rep'},{z:88,sym:'Ra',name:'Rad.',col:2,row:7,type:'rep'},
+  {z:89,sym:'Ac',name:'Act.',col:3,row:7,type:'inner'},
+  {z:104,sym:'Rf',name:'Rut.',col:4,row:7,type:'trans'},{z:105,sym:'Db',name:'Dub.',col:5,row:7,type:'trans'},
+  {z:106,sym:'Sg',name:'Sea.',col:6,row:7,type:'trans'},{z:107,sym:'Bh',name:'Boh.',col:7,row:7,type:'trans'},
+  {z:108,sym:'Hs',name:'Has.',col:8,row:7,type:'trans'},{z:109,sym:'Mt',name:'Mei.',col:9,row:7,type:'trans'},
+  {z:110,sym:'Ds',name:'Dam.',col:10,row:7,type:'trans'},{z:111,sym:'Rg',name:'Rgt.',col:11,row:7,type:'trans'},
+  {z:112,sym:'Cn',name:'Cop.',col:12,row:7,type:'trans'},
+  {z:113,sym:'Nh',name:'Nih.',col:13,row:7,type:'rep'},{z:114,sym:'Fl',name:'Fle.',col:14,row:7,type:'rep'},
+  {z:115,sym:'Mc',name:'Mos.',col:15,row:7,type:'rep'},{z:116,sym:'Lv',name:'Liv.',col:16,row:7,type:'rep'},
+  {z:117,sym:'Ts',name:'Ten.',col:17,row:7,type:'rep'},{z:118,sym:'Og',name:'Oga.',col:18,row:7,type:'noble'},
+];
+
+const typeMap = {
+  rep:'pt-rep', trans:'pt-trans', first:'pt-first pt-trans',
+  iron:'pt-iron pt-first pt-trans', noble:'pt-noble', inner:'pt-inner'
+};
+
+const grid = document.getElementById('ptGrid');
+// Build 7x18 grid
+for(let r=1;r<=7;r++){
+  for(let c=1;c<=18;c++){
+    const el=elements.find(e=>e.row===r&&e.col===c);
+    const div=document.createElement('div');
+    if(el){
+      div.className='pt-cell '+(typeMap[el.type]||'pt-rep');
+      div.innerHTML=`<span class="pt-num">${el.z}</span><span class="pt-sym">${el.sym}</span><span class="pt-name">${el.name}</span>`;
+      if(el.type==='first'||el.type==='iron'){
+        div.title=`${el.sym} — Z=${el.z}`;
+        div.style.cursor='pointer';
+        div.addEventListener('click',()=>{
+          const target=document.getElementById('elements');
+          if(target)target.scrollIntoView({behavior:'smooth'});
+        });
+      }
+    } else {
+      div.className='pt-cell empty';
+      // Lanthanide/actinide spacer labels
+      if(r===6&&c===4){div.className='pt-cell';div.innerHTML='<span class="pt-sym" style="font-size:.5rem;color:var(--amber)">58–71</span><span class="pt-name" style="color:var(--amber)">Ln-series</span>';}
+      if(r===7&&c===4){div.className='pt-cell';div.innerHTML='<span class="pt-sym" style="font-size:.5rem;color:var(--amber)">90–103</span><span class="pt-name" style="color:var(--amber)">Ac-series</span>';}
+    }
+    grid.appendChild(div);
+  }
+}
+
+/* ─── SCROLL REVEAL ─── */
+const fades=document.querySelectorAll('.fade');
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*60);
+  });
+},{threshold:.08});
+fades.forEach(f=>io.observe(f));
+</script>
+</body>
+</html>
